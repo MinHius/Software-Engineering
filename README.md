@@ -1,6 +1,6 @@
 # Software-Engineering
 BTL
-Trịnh Minh Hiếu
-Trần Hồng Đăng
-Hoàng Ngọc Hào
-Trần Kim Thành
+Trịnh Minh Hiếu \n
+Trần Hồng Đăng \n
+Hoàng Ngọc Hào \n
+Trần Kim Thành \n
