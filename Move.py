@@ -28,7 +28,7 @@ def AI(board, n):
     global first  
     global count
         
-    if first == True or count <= 2 and n >= 4:
+    if first == True or count <= n - 1 and n >= 4:
         random_first_move = random.randint(0, n - 1) # nước đi đầu của AI là random.
         z = random_first_move
         if board[z * n + z] == '-':
