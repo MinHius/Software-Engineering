@@ -1,13 +1,13 @@
 import Check
-import Board # type: ignore
+import Board 
 import random
 import math
 
 # Khai báo biến global.
 x = 'X'
 o = 'O'
-first = True
-count = 0
+first = True # Theo dõi lượt đi đầu.
+count = 0 # Số lần random nước đi của AI.
 
 # Hàm di chuyển của người chơi.
 def Player(board, size): 

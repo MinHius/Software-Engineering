@@ -6,7 +6,7 @@ size = 0 # Kích thước ván chơi.
 
 
 # Hàm bắt đầu trò chơi.
-def play():  
+def start():  
     global size
     size = int(input('Nhap kich thuoc bang: '))
     board = Board.newBoard(size)
@@ -16,7 +16,7 @@ def play():
     if Move.Player(board, size):
         x = int(input('Choi lai khong? 0-Khong, 1-Co: ')) 
         if x == 1:
-            play()   
+            start()   
         else: 
             end() 
 
@@ -26,4 +26,4 @@ def end():
     
        
 # Bắt đầu chạy chương trình.
-play()
+start()
