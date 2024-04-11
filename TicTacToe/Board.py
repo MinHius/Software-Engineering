@@ -1,12 +1,13 @@
 
-
-def newBoard(n):
-    board = ['-']*(n*n)
+# Tạo ván chơi mới.
+def newBoard(size):
+    board = ['-']*(size*size)
     return board
 
-def display(board, n):
-    for i in range(0, len(board), n):
-        values = [str(z[0]) for z in board[i:i+n]]
+# Hiển thị ván chơi.
+def display(board, size):
+    for i in range(0, len(board), size):
+        values = [str(z[0]) for z in board[i:i + size]]
         print(' '.join(values))
         
         

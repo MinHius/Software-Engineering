@@ -1,5 +1,6 @@
-def final(board, n):
-    final = checkState(board, n)
+# Hàm update kết quả.
+def final(board, size):
+    final = checkState(board, size)
     if final == None:
         return False
     elif final == -1: 
@@ -12,95 +13,97 @@ def final(board, n):
         print('AI wins!')
         return True
 
-
-def checkState(board, n):
-    return checkDiag(board, n)
+# Hàm xét các trạng thái.
+def checkState(board, size):
+    return checkDiag(board, size)
     
  
-    
-def checkDiag(board, n):
-    #Check first diagonal line.
+# Kiểm tra đường chéo.    
+def checkDiag(board, size):
+    # Kiểm tra đường chéo chính.
     j1 = 0
     j2 = 0
-    for i in range(n - 1):
-        if board[i * n + i] == board[(i + 1) * (n + 1)] and board[i * n + i] == 'X' and board[(i + 1) * (n + 1)] == 'X':
+    for i in range(size - 1):
+        if board[i * size + i] == board[(i + 1) * (size + 1)] and board[i * size + i] == 'X' and board[(i + 1) * (size + 1)] == 'X':
             j1 = j1 + 1
-    if j1 + 1 == n:
+    if j1 + 1 == size:
         return -1
 
     
     
-    for i in range(n - 1):
-        if board[i * n + i] == board[(i + 1) * (n + 1)] and board[i * n + i] == 'O' and board[(i + 1) * (n + 1)] == 'O':
+    for i in range(size - 1):
+        if board[i * size + i] == board[(i + 1) * (size + 1)] and board[i * size + i] == 'O' and board[(i + 1) * (size + 1)] == 'O':
             j2 = j2 + 1
-    if j2 + 1 == n:
+    if j2 + 1 == size:
         return 1
 
     
-    #Check second diagonal line.
+    # Kiểm tra đường chéo phụ.
     k1 = 0
     k2 = 0
-    for i in range(n - 1):
-        if board[(i + 1) * (n - 1)] == board[(i + 2) * (n - 1)] and board[(i + 1) * (n - 1)] == 'X' and board[(i + 2) * (n - 1)] == 'X':
+    for i in range(size - 1):
+        if board[(i + 1) * (size - 1)] == board[(i + 2) * (size - 1)] and board[(i + 1) * (size - 1)] == 'X' and board[(i + 2) * (size - 1)] == 'X':
             k1 = k1 + 1
-    if k1 + 1 == n:
+    if k1 + 1 == size:
         return -1
 
     
-    for i in range(n - 1):
-        if board[(i + 1) * (n - 1)] == board[(i + 2) * (n - 1)] and board[(i + 1) * (n - 1)] == 'O' and board[(i + 2) * (n - 1)] == 'O':
+    for i in range(size - 1):
+        if board[(i + 1) * (size - 1)] == board[(i + 2) * (size - 1)] and board[(i + 1) * (size - 1)] == 'O' and board[(i + 2) * (size - 1)] == 'O':
             k2 = k2 + 1
-    if k2 + 1 == n:
+    if k2 + 1 == size:
         return 1
 
     
     
-    return checkCol(board, n)
+    return checkCol(board, size)
 
 
-
-def checkCol(board, n):
+# Kiểm tra cột.
+def checkCol(board, size):
     i = 0
     j = 0
-    for k in range(n):
-        for l in range(n - 1):
-            if board[l * n + k] == board[(l + 1) * n + k] and board[l * n + k] == 'X' and board[(l + 1) * n + k] == 'X':
+    for k in range(size):
+        for l in range(size):
+            if board[l * size + k] == board[(l + 1) * size + k] and board[l * size + k] == 'X' and board[(l + 1) * size + k] == 'X':
                 i = i + 1
-            if board[l * n + k] == board[(l + 1) * n + k] and board[l * n + k] == 'O' and board[(l + 1) * n + k] == 'O':
+            if board[l * size + k] == board[(l + 1) * size + k] and board[l * size + k] == 'O' and board[(l + 1) * size + k] == 'O':
                 j = j + 1
-        if i + 1 == n:
+        if i + 1 == size:
             return -1
-        elif j + 1 == n:
+        elif j + 1 == size:
             return 1
         else:
             i = 0
             j = 0
 
          
-    return checkRow(board, n)
+    return checkRow(board, size)
      
-            
-def checkRow(board, n):
+
+# Kiểm tra hàng.        
+def checkRow(board, size):
     i = 0
     j = 0
-    for l in range(n):
-        for k in range(n - 1):
-            if board[l * n + k] == board[l * n + 1 + k] and board[l * n + k] == 'X' and board[l * n + 1 + k] == 'X':
+    for l in range(size):
+        for k in range(size - 1):
+            if board[l * size + k] == board[l * size + 1 + k] and board[l * size + k] == 'X' and board[l * size + 1 + k] == 'X':
                 i = i + 1
-            if board[l * n + k] == board[l * n + 1 + k] and board[l * n + k] == 'O' and board[l * n + 1 + k] == 'O':
+            if board[l * size + k] == board[l * size + 1 + k] and board[l * size + k] == 'O' and board[l * size + 1 + k] == 'O':
                 j = j + 1
-        if i + 1 == n:
+        if i + 1 == size:
             return -1
-        elif j + 1 == n:
+        elif j + 1 == size:
             return 1
         else:
             i = 0
             j = 0
         
-    return checkTie(board, n)
+    return checkTie(board, size)
 
 
-def checkTie(board, n):
+# Kiểm tra hòa.
+def checkTie(board, size):
     if '-' not in board:
         return 0
 

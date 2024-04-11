@@ -3,14 +3,16 @@ import Board # type: ignore
 import random
 import math
 
+# Khai báo biến global.
 x = 'X'
 o = 'O'
 first = True
 count = 0
 
-def Player(board, n): 
+# Hàm di chuyển của người chơi.
+def Player(board, size): 
     
-    if Check.final(board, n):
+    if Check.final(board, size):
         return True
     
     else:   
@@ -18,46 +20,46 @@ def Player(board, n):
         x1 = int(x1)
         y1 = int(y1)
         
-        board[x1 * n + y1] = x
-        Board.display(board, n)
-        AI(board, n)
+        board[x1 * size + y1] = x
+        Board.display(board, size)
+        AI(board, size)
        
           
-        
-def AI(board, n):  
+# Hàm di chuyển của AI.        
+def AI(board, size):  
     global first  
     global count
         
-    if first == True or count <= n - 1 and n >= 4:
-        random_first_move = random.randint(0, n - 1) # nước đi đầu của AI là random.
+    if first == True or count <= size - 1 and size >= 4:
+        random_first_move = random.randint(0, size - 1) # nước đi đầu của AI là random.
         z = random_first_move
-        if board[z * n + z] == '-':
+        if board[z * size + z] == '-':
             print("AI's turn:")
-            board[z*n + z] = o
-            Board.display(board, n)
+            board[z * size + z] = o
+            Board.display(board, size)
             
             first = False
             count = count + 1
-            if Check.final(board, n):
+            if Check.final(board, size):
                 return True
             
             else: 
-                Player(board, n)
+                Player(board, size)
         else:
-            AI(board, n)
+            AI(board, size)
             
     else:
-        AIMove = bestMove(board, n) # từ nước thứ 2 sẽ là nước đi tính toán.
-        board[AIMove[0]*n + AIMove[1]] = o
+        AIMove = bestMove(board, size) # từ nước thứ 2 sẽ là nước đi tính toán.
+        board[AIMove[0] * size + AIMove[1]] = o
         
         print("AI's turn:")
-        Board.display(board, n)
-        Player(board, n)
+        Board.display(board, size)
+        Player(board, size)
     
         
         
         
-        
+# Hàm tính nước di chuyển tốt nhất cho AI.       
 def bestMove(board, n):
     bestScore = -(math.inf)
     bestMove = None
@@ -77,7 +79,7 @@ def bestMove(board, n):
 
     
                 
- 
+# Thuật toán Minimax Alpha Beta Pruning.
 def minimax(board, depth, isMaxing, alpha, beta, n):
     result = Check.checkState(board, n)
     if result != None:

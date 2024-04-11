@@ -1,33 +1,29 @@
-import Move # type: ignore
-import Board # type: ignore
+import Move 
+import Board 
+
+# Khai báo biến.
+size = 0 # Kích thước ván chơi.
 
 
-n = 0
-currentPlayer = True
-
-
+# Hàm bắt đầu trò chơi.
 def play():  
-    global n
-    n = int(input('Nhap kich thuoc bang: '))
-    board = Board.newBoard(n)
+    global size
+    size = int(input('Nhap kich thuoc bang: '))
+    board = Board.newBoard(size)
     
-    Board.display(board, n) 
+    Board.display(board, size) 
     
-    if Move.Player(board, n):
+    if Move.Player(board, size):
         x = int(input('Choi lai khong? 0-Khong, 1-Co: ')) 
         if x == 1:
             play()   
         else: 
             end() 
 
-
+# Hàm kết thúc trò chơi.
 def end():
     print("See you later!")   
     
        
-
-
- 
-
-# Start 
+# Bắt đầu chạy chương trình.
 play()
