@@ -64,7 +64,7 @@ def checkCol(board, size):
     i = 0
     j = 0
     for k in range(size):
-        for l in range(size):
+        for l in range(size - 1):
             if board[l * size + k] == board[(l + 1) * size + k] and board[l * size + k] == 'X' and board[(l + 1) * size + k] == 'X':
                 i = i + 1
             if board[l * size + k] == board[(l + 1) * size + k] and board[l * size + k] == 'O' and board[(l + 1) * size + k] == 'O':
@@ -99,11 +99,11 @@ def checkRow(board, size):
             i = 0
             j = 0
         
-    return checkTie(board, size)
+    return checkTie(board)
 
 
 # Kiểm tra hòa.
-def checkTie(board, size):
+def checkTie(board):
     if '-' not in board:
         return 0
 
