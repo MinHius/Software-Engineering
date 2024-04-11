@@ -1,7 +1,7 @@
 
 # Tạo ván chơi mới.
 def newBoard(size):
-    board = ['-']*(size*size)
+    board = ['-'] * (size * size)
     return board
 
 # Hiển thị ván chơi.
