@@ -11,26 +11,37 @@ count = 0 # Số lần random nước đi của AI để giảm khối lượng 
 
 # Hàm di chuyển của người chơi.
 def Player(board, size, turn): 
-    
-    if turn == 1:
-        a, b = input("Player 1's turn: ").split()
-        a = int(a)
-        b = int(b)
-        board[a * size + b] = x
+
+    if turn == 1 or turn == 0:
+        if turn == 1:
+            a, b = input("Player 1's turn: ").split()
+        if turn == 0:
+            a, b = input("Player's turn: ").split() 
+            
+        check = validMove(a, b, board, size, turn)
         
+        if check == True:
+            Board.display(board, size)
+            a = int(a)
+            b = int(b)
+            board[a * size + b] = x
+        else:
+            Player(board, size, turn)
+        
+
     elif turn == 2:
-        a, b = input("Player 2's turn: ").split()    
-        a = int(a)
-        b = int(b)
-        board[a * size + b] = o
+        a, b = input("Player 2's turn: ").split() 
+        check = validMove(a, b, board, size, turn)  
         
-    elif turn == 0:
-        a, b = input("Player's turn: ").split()    
-        a = int(a)
-        b = int(b)
-        board[a * size + b] = x
-    
-    Board.display(board, size)
+        if check == True:
+            Board.display(board, size) 
+            a = int(a)
+            b = int(b)
+            board[a * size + b] = o
+        else:
+            Player(board, size, turn)
+            
+            
     print('')
         
 
@@ -39,7 +50,7 @@ def Player(board, size, turn):
 def AI(board, size):  
     global first  
     global count
-    
+
     if first == True or count < size - 2 and size >= 4:
         random_first_move = random.randint(0, size - 1) # nước đi đầu của AI là random.
         z = random_first_move
@@ -47,9 +58,9 @@ def AI(board, size):
         if board[z * size + z] == '-':
             print("AI's turn:")
             board[z * size + z] = o
-            
             Board.display(board, size)
             print('')
+            
             count = count + 1
             first = False
             
@@ -57,12 +68,14 @@ def AI(board, size):
             AI(board, size)
             
     else:
+        print("AI's turn:")
         AIMove = bestMove(board, size) # từ nước thứ 2 sẽ là nước đi tính toán.
         board[AIMove[0] * size + AIMove[1]] = o
-        
-        print("AI's turn:")
         Board.display(board, size)
         print('')
+        
+        
+        
     
         
         
@@ -120,7 +133,28 @@ def minimax(board, depth, isMaxing, alpha, beta, size):
                     if beta <= alpha:
                         break
         return bestScore
-     
+           
         
     
-            
+def validMove(a, b, board, size, turn):
+    a = int(a)
+    b = int(b)
+    number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    if a in number and b in number:
+        
+        if ((a < 0 and b < 0) or (a > size - 1 and b > size - 1)):
+            print('Invalid move.')
+            return False
+        
+        elif board[a * size + b] != '-':
+            print('Invalid move.')
+            return False
+        
+        else:
+            return True
+        
+    else:
+        print('Move input should be a pair of integer!')
+        return False
+    
+        

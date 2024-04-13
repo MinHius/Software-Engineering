@@ -89,7 +89,7 @@ def play(mode):
 
 # Hàm kết thúc trò chơi.
 def end():
-    print("Tạm biệt!") 
+    print("See you later") 
     print('')
     print('')
     print('')
