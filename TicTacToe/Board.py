@@ -9,8 +9,7 @@ def validSize(mode, size):
             return 'again'
         else:
             print('Invalid input!')
-            print('')
-            return 'again'
+            validSize(mode, size)
 
     elif mode == 1 and size < 3 or size > 6:
         return 'again' 
