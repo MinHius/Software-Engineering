@@ -21,23 +21,24 @@ def Player(board, size, turn):
         check = validMove(a, b, board, size, turn)
         
         if check == True:
-            Board.display(board, size)
             a = int(a)
             b = int(b)
             board[a * size + b] = x
+            Board.display(board, size)
         else:
             Player(board, size, turn)
         
 
     elif turn == 2:
         a, b = input("Player 2's turn: ").split() 
+        
         check = validMove(a, b, board, size, turn)  
         
         if check == True:
-            Board.display(board, size) 
             a = int(a)
             b = int(b)
             board[a * size + b] = o
+            Board.display(board, size)
         else:
             Player(board, size, turn)
             
@@ -137,24 +138,24 @@ def minimax(board, depth, isMaxing, alpha, beta, size):
         
     
 def validMove(a, b, board, size, turn):
-    a = int(a)
-    b = int(b)
-    number = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    
+    number = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     if a in number and b in number:
-        
-        if ((a < 0 and b < 0) or (a > size - 1 and b > size - 1)):
-            print('Invalid move.')
-            return False
-        
-        elif board[a * size + b] != '-':
-            print('Invalid move.')
-            return False
-        
-        else:
-            return True
-        
+        a = int(a)
+        b = int(b)
     else:
         print('Move input should be a pair of integer!')
         return False
+        
+    if ((a < 0 and b < 0) or (a > size - 1 and b > size - 1)):
+        print('Invalid move.')
+        return False
+    
+    elif board[a * size + b] != '-':
+        print('Invalid move.')
+        return False
+    
+    else:
+        return True
     
         

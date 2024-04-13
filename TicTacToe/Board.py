@@ -1,6 +1,6 @@
 
 # Kiểm soát ngoại lệ kích thước.
-def invalidSize(mode, size):
+def validSize(mode, size):
     if mode == 0 and size != 3:
         x = input('This gamemode do not support size larger than 3, but the other gamemode does. Do you want to switch gamemode? 0 for No, 1 for Yes: ')
         if x == '1':

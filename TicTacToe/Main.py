@@ -14,7 +14,7 @@ def play(mode):
     # Khởi tạo ván chơi.
     size = int(input('Insert board size: '))   
     
-    valid = Board.invalidSize(mode, size)  # accepted / switch / again.
+    valid = Board.validSize(mode, size)  # accepted / switch / again.
     
     if valid == 'accepted':  
         print("Game start!")
@@ -41,50 +41,28 @@ def play(mode):
             Move.Player(board, size, 0)
             if Check.final(board, size, 0, 0): 
                 done = True
-                x = int(input('Play again? 0 for No, 1 for Yes: ')) 
-                if x == 1:
-                    done = False
-                    print('')
-                    initiate()   
-                else:  
-                    end()
+                playAgain(done)
                     
             Move.AI(board, size)
             if Check.final(board, size, 0, 1): 
                 done = True
-                x = int(input('Play again? 0 for No, 1 for Yes: ')) 
-                if x == 1:
-                    done = False
-                    print('')
-                    initiate()   
-                else:  
-                    end()
+                playAgain(done)
                     
-                    
+    # Chế độ người vs người.              
     if mode == 1:
         # Chơi theo lượt.
         while done != True:
             Move.Player(board, size, 1)
             if Check.final(board, size, 1, 0): 
                 done = True
-                x = int(input('Play again? 0 for No, 1 for Yes: ')) 
-                if x == 1:
-                    done = False
-                    print('')
-                    initiate()   
-                else:  
-                    end()
+                playAgain(done)
                     
             Move.Player(board, size, 2)
             if Check.final(board, size, 1, 1): 
                 done = True
-                x = int(input('Play again? 0 for No, 1 for Yes: ')) 
-                if x == 1:
-                    done = False
-                    print('')
-                    initiate()   
-                else:  
-                    end()
+                playAgain(done)
+                
+                    
         
 
 # Hàm kết thúc trò chơi.
@@ -95,13 +73,34 @@ def end():
     print('')
     print('')
     initiate()  
+
+# Hàm chơi lại nếu muốn.
+def playAgain(done):
+    x = input('Play again? 0 for No, 1 for Yes: ') 
+    if x == '1':
+        done = False
+        print('')
+        initiate()   
+    elif x == '0':  
+        end()
+    else:
+        print('Invalid input.')
+        playAgain(done)
     
        
 # Bắt đầu chạy chương trình.
 def initiate():
     print('Welcome to Tic Tac Toe!')
     y = int(input('Please choose game mode: 0 for Player vs AI, 1 for Player vs Player: '))
-    play(y)
+    if y != 0 and y != 1:
+        print('Invalid input.')
+        print('')
+        print('')
+        print('')
+        print('')
+        initiate()
+    else:
+        play(y)
 
 
 # Luôn chạy.  
