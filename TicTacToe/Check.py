@@ -7,12 +7,15 @@ def final(board, size, gamemode, turn):
             return False
         elif final == 0: 
             print('Tie!')
+            print('')
             return True 
         elif final == -1 and turn == 0: 
             print('Player wins!')
+            print('')
             return True
         elif final == 1 and turn == 1: 
             print('AI wins!')
+            print('')
             return True
         
         
@@ -21,12 +24,15 @@ def final(board, size, gamemode, turn):
             return False
         elif final == -1 and turn == 0: 
             print('Player 1 wins!')
+            print('')
             return True
         elif final == 1 and turn == 1: 
             print('Player 2 wins!')
+            print('')
             return True
         elif final == 0: 
             print('Tie!')
+            print('')
             return True 
 
 

@@ -31,6 +31,7 @@ def Player(board, size, turn):
         board[a * size + b] = x
     
     Board.display(board, size)
+    print('')
         
 
           
@@ -48,6 +49,7 @@ def AI(board, size):
             board[z * size + z] = o
             
             Board.display(board, size)
+            print('')
             count = count + 1
             first = False
             
@@ -60,6 +62,7 @@ def AI(board, size):
         
         print("AI's turn:")
         Board.display(board, size)
+        print('')
     
         
         
