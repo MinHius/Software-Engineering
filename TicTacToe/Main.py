@@ -4,7 +4,7 @@ import Check
 
 # Khai báo biến.
 size = 0 # Kích thước ván chơi.
-done = False
+done = False # Ván chơi kết thúc chưa.
 
 # Hàm bắt đầu trò chơi.
 def play():  
