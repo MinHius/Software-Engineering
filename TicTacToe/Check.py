@@ -1,17 +1,34 @@
 # Hàm update kết quả.
-def final(board, size):
+def final(board, size, gamemode, turn):
     final = checkState(board, size)
-    if final == None:
-        return False
-    elif final == -1: 
-        print('Player wins!')
-        return True
-    elif final == 0: 
-        print('Tie!')
-        return True 
-    elif final == 1: 
-        print('AI wins!')
-        return True
+    
+    if gamemode == 0:
+        if final == None:
+            return False
+        elif final == 0: 
+            print('Tie!')
+            return True 
+        elif final == -1 and turn == 0: 
+            print('Player wins!')
+            return True
+        elif final == 1 and turn == 1: 
+            print('AI wins!')
+            return True
+        
+        
+    if gamemode == 1:
+        if final == None:
+            return False
+        elif final == -1 and turn == 0: 
+            print('Player 1 wins!')
+            return True
+        elif final == 1 and turn == 1: 
+            print('Player 2 wins!')
+            return True
+        elif final == 0: 
+            print('Tie!')
+            return True 
+
 
 # Hàm xét các trạng thái.
 def checkState(board, size):

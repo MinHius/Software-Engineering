@@ -10,13 +10,26 @@ first = True # Theo dõi lượt đầu kết thức hay chưa.
 count = 0 # Số lần random nước đi của AI để giảm khối lượng tính toán.
 
 # Hàm di chuyển của người chơi.
-def Player(board, size): 
+def Player(board, size, turn): 
     
-    x1, y1 = input("Player's turn: ").split()
-    x1 = int(x1)
-    y1 = int(y1)
+    if turn == 1:
+        a, b = input("Player 1's turn: ").split()
+        a = int(a)
+        b = int(b)
+        board[a * size + b] = x
+        
+    elif turn == 2:
+        a, b = input("Player 2's turn: ").split()    
+        a = int(a)
+        b = int(b)
+        board[a * size + b] = o
+        
+    elif turn == 0:
+        a, b = input("Player's turn: ").split()    
+        a = int(a)
+        b = int(b)
+        board[a * size + b] = x
     
-    board[x1 * size + y1] = x
     Board.display(board, size)
         
 
