@@ -129,5 +129,3 @@ def checkRow(board, size):
 def checkTie(board):
     if '-' not in board:
         return 0
-
-        

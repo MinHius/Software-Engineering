@@ -18,7 +18,7 @@ def Player(board, size, turn):
         if turn == 0:
             a, b = input("Player's turn: ").split() 
             
-        check = validMove(a, b, board, size, turn)
+        check = validMove(a, b, board, size)
         
         if check == True:
             a = int(a)
@@ -32,7 +32,7 @@ def Player(board, size, turn):
     elif turn == 2:
         a, b = input("Player 2's turn: ").split() 
         
-        check = validMove(a, b, board, size, turn)  
+        check = validMove(a, b, board, size)  
         
         if check == True:
             a = int(a)
@@ -137,8 +137,7 @@ def minimax(board, depth, isMaxing, alpha, beta, size):
            
         
     
-def validMove(a, b, board, size, turn):
-    
+def validMove(a, b, board, size):
     number = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     if a in number and b in number:
         a = int(a)

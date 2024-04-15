@@ -2,6 +2,9 @@ import Move
 import Board 
 import Check
 
+x = 'X'
+o = 'O'
+
 # Khai báo biến.
 size = 0 # Kích thước ván chơi.
 done = False # Ván chơi kết thúc chưa.
@@ -12,30 +15,44 @@ def play(mode):
     global done
     
     # Khởi tạo ván chơi.
-    size = int(input('Insert board size: '))   
-    
-    valid = Board.validSize(mode, size)  # accepted / switch / again.
-    
-    if valid == 'accepted':  
-        print("Game start!")
+    if mode == 1:
+        size = 50
         board = Board.newBoard(size)
-        Board.display(board, size) 
-        
-    elif valid == 'switch':
-        print('Switched to Player vs Player') 
-        play(mode + 1)
-        
-    elif valid == 'again' and mode == 0:
-        print('Try again with "3".')
-        play(mode)
-        
-    elif valid == 'again' and mode == 1:
-        print('This gamemode do not support size smaller than 3 and larger than 6. Try again in the range of (3,6).')
-        play(mode)
-        
-    
+        # Chơi theo lượt.
+        while done != True:
+            Move.Player(board, size, 1)
+            if Check.final(board, size, 1, 1): 
+                done = True
+                playAgain(done)
+                    
+            Move.Player(board, size, 2)
+            if Check.final(board, size, 1, 2): 
+                done = True
+                playAgain(done)
+            
     # Chế độ người vs máy.
     if mode == 0:
+        size = int(input('Insert board size: '))   
+    
+        valid = Board.validSize(mode, size)  # accepted / switch / again.
+        
+        if valid == 'accepted':  
+            print("Game start!")
+            board = Board.newBoard(size)
+            Board.display(board, size) 
+            
+        elif valid == 'switch':
+            print('Switched to Player vs Player') 
+            play(mode + 1)
+            
+        elif valid == 'again' and mode == 0:
+            print('Try again with "3".')
+            play(mode)
+            
+        elif valid == 'again' and mode == 1:
+            print('This gamemode do not support size smaller than 3 and larger than 5. Try again in the range of (3,6).')
+            play(mode)
+        
         # Chơi theo lượt.
         while done != True:
             Move.Player(board, size, 0)
@@ -46,21 +63,7 @@ def play(mode):
             Move.AI(board, size)
             if Check.final(board, size, 0, 1): 
                 done = True
-                playAgain(done)
-                    
-    # Chế độ người vs người.              
-    if mode == 1:
-        # Chơi theo lượt.
-        while done != True:
-            Move.Player(board, size, 1)
-            if Check.final(board, size, 1, 0): 
-                done = True
-                playAgain(done)
-                    
-            Move.Player(board, size, 2)
-            if Check.final(board, size, 1, 1): 
-                done = True
-                playAgain(done)
+                playAgain(done)      
                 
                     
         
