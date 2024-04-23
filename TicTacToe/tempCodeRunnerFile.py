@@ -1,1 +1,0 @@
-    Board.display(board, size)
