@@ -19,6 +19,6 @@ Game Tic Tac Toe.
 # Cách chạy phần mềm.
 1. Tải Git Bash
 2. Vào Git Bash và nhập lệnh:
-   $ git clone <link repo>
+   $ git clone + link repo
 3. Mở file 'app.py' và chạy.
 4. Mở web và nhập url: 'localhost:5000'.
