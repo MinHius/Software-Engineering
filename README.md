@@ -21,6 +21,6 @@ Game Tic Tac Toe.
 2. Vào Git Bash và nhập lệnh:
    - $ git clone + link repo
 3. Mở file 'app.py':
-   - pip 3 install flask socketio websocket flask_socketio và chạy.
+   - pip3 install flask socketio websocket flask_socketio và chạy.
 5. Mở web và nhập url: 'localhost:5000'.
    - Nếu test multiplayer trên cùng 1 máy, thì mở 1 tab bình thường và 1 tab ẩn danh.
