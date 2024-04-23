@@ -1,0 +1,97 @@
+/* body{
+  background-color: rgb(93, 162, 247);
+} */
+
+header{
+  text-align: center;
+}
+
+p{
+  margin: 0px;
+  text-align: center;
+}
+#container{
+  /* background-color: aqua;
+  border: 5px solid; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  
+}
+
+.tittle{
+  margin-top: -50px;
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.inline{
+  flex: 1;
+  margin: 5px;
+}
+
+#create{
+  width: 250px; /* Set the width of the box */
+  height: 200px; /* Set the height of the box */
+  padding: 20px; /* Add some padding inside the box */
+  background-color: white; /* Set the background color */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a shadow */
+}
+
+#join{
+  width: 250px; /* Set the width of the box */
+  height: 200px; /* Set the height of the box */
+  padding: 20px; /* Add some padding inside the box */
+  background-color: white; /* Set the background color */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a shadow */
+}
+
+.button{
+  position: absolute;
+  bottom: 30px;
+  
+}
+
+.vertical-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  
+}
+  
+
+
+.btn {
+  padding: 5px 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btj {
+  padding: 5px 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn.active {
+  font-weight: bold;
+}
+
+.btj.active {
+  font-weight: bold;
+}
+
+  
+  
+  
