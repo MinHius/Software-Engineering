@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" 
+    integrity="sha384-j4HdaA3uLPh11+Rj8Yr5RN4OQbmLRZwGrhS6YprG6d70x6vIqSWmV9zmnj4Wq9fs" 
+    crossorigin="anonymous"></script>
+
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='style.css')}}"
+    />
+</head>
+<body>
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
+        <p> Room {{room}} </p>
+        <div id="game-board">
+            <div class="row">
+                <div class="cell" data-row="0" data-col="0"></div>
+                <div class="cell" data-row="0" data-col="1"></div>
+                <div class="cell" data-row="0" data-col="2"></div>
+                <div class="cell" data-row="0" data-col="3"></div>
+                <div class="cell" data-row="0" data-col="4"></div>
+                <div class="cell" data-row="0" data-col="5"></div>
+            </div>
+            <div class="row">
+                <div class="cell" data-row="1" data-col="0"></div>
+                <div class="cell" data-row="1" data-col="1"></div>
+                <div class="cell" data-row="1" data-col="2"></div>
+                <div class="cell" data-row="1" data-col="3"></div>
+                <div class="cell" data-row="1" data-col="4"></div>
+                <div class="cell" data-row="1" data-col="4"></div>
+            </div>
+            <div class="row">
+                <div class="cell" data-row="2" data-col="0"></div>
+                <div class="cell" data-row="2" data-col="1"></div>
+                <div class="cell" data-row="2" data-col="2"></div>
+                <div class="cell" data-row="2" data-col="3"></div>
+                <div class="cell" data-row="2" data-col="4"></div>
+                <div class="cell" data-row="2" data-col="5"></div>
+            </div>
+            <div class="row">
+                <div class="cell" data-row="3" data-col="0"></div>
+                <div class="cell" data-row="3" data-col="1"></div>
+                <div class="cell" data-row="3" data-col="2"></div>
+                <div class="cell" data-row="3" data-col="3"></div>
+                <div class="cell" data-row="3" data-col="4"></div>
+                <div class="cell" data-row="3" data-col="5"></div>
+            </div>
+            <div class="row">
+                <div class="cell" data-row="4" data-col="0"></div>
+                <div class="cell" data-row="4" data-col="1"></div>
+                <div class="cell" data-row="4" data-col="2"></div>
+                <div class="cell" data-row="4" data-col="3"></div>
+                <div class="cell" data-row="4" data-col="4"></div>
+                <div class="cell" data-row="4" data-col="5"></div>
+            </div>
+            <div class="row">
+                <div class="cell" data-row="5" data-col="0"></div>
+                <div class="cell" data-row="5" data-col="1"></div>
+                <div class="cell" data-row="5" data-col="2"></div>
+                <div class="cell" data-row="5" data-col="3"></div>
+                <div class="cell" data-row="5" data-col="4"></div>
+                <div class="cell" data-row="5" data-col="5"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/script.js">
+      var socketio = io()
+    </script>
+</body>
+</html>
