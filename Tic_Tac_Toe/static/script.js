@@ -1,25 +1,26 @@
-document.addEventListener("DOMContentLoaded", function() {
-
+    document.addEventListener("DOMContentLoaded", function() {
     const cells = document.querySelectorAll('.cell');
     turn = 0
     let finished = true
     let boardSize = Math.sqrt(cells.length);
     var board = new Array(boardSize * boardSize)
     // Add click event listener to each cell
-    cells.forEach(cell => {
+    cells.forEach((cell, index) => {
         cell.addEventListener('click', function(event) {
             // Check if the cell is empty
             if (this.textContent === "X" || this.textContent === "O") {
                 alert("Invalid move!")
                 finished = true
             }
+
             if (!this.textContent) {
                 // Change the content of the cell to "X"
-                this.textContent = "X";
+                this.textContent = "X"
                 // Start the game tracker
                 finished = false
                 turn++;
             }
+
             
 
             // Check for a winner

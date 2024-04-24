@@ -120,6 +120,19 @@ def connect(auth):
     send({"name": name, "message": "has entered the room"}, to = room)
     rooms[room]["members"] += 1
     print(f"{name} joined room {room}")
+    
+@socketio.on('makeMove')
+def handle_move(data):
+    room = session.get("room")
+    if data['content'] == "X" and (data['turn'] % 2 == 0):
+        data['turn'] += 1
+        emit('moveMade', data, to= room)   # emit la phat su kien 'move' cho client, gui move cho room
+    elif data['content'] == "O" and (data['turn'] % 2 != 0):
+        data['turn'] += 1
+        emit('moveMade', data, to= room)
+    else:
+        pass
+    
 
 @socketio.on("disconnect")
 def disconnect():
