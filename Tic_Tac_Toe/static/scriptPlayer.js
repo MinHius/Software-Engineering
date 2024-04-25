@@ -13,7 +13,22 @@ document.addEventListener("DOMContentLoaded", function() {
         turn = data.turn
         cells[position].textContent = content
         currentPlayer = playerTurn
-        
+        // Check for a winner
+        let winner = checkState(cells);
+        // Determine the result
+        if (winner === -1) {
+            alert("Player X wins!");
+            finished = true
+            resetBoard(cells);
+        } else if (winner === 1) {
+            alert("Player O wins!");
+            finished = true
+            resetBoard(cells);
+        } else if (winner === 0) {
+            alert("It's a tie!");
+            finished = true
+            resetBoard(cells);
+        }
     })
     // Add click event listener to each cell
     cells.forEach((cell, index) => {
@@ -35,22 +50,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
                 socketio.emit('makeMove', data)
                 console.log("turn: ", turn);   
-            }
-            // Check for a winner
-            let winner = checkState(cells);
-            // Determine the result
-            if (winner === -1) {
-                alert("Player X wins!");
-                finished = true
-                resetBoard(cells);
-            } else if (winner === 1) {
-                alert("Player O wins!");
-                finished = true
-                resetBoard(cells);
-            } else if (winner === 0) {
-                alert("It's a tie!");
-                finished = true
-                resetBoard(cells);
             } 
         });
     });

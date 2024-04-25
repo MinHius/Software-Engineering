@@ -93,6 +93,10 @@ def home():
               
         session["room"] = room
         session["name"] = name 
+        if create != False:
+            session['role'] = "X"
+        else:
+            session['role'] = "O"
         return redirect(url_for("room"))     
               
     return render_template('home.html')
@@ -119,15 +123,20 @@ def connect(auth):
     join_room(room)
     send({"name": name, "message": "has entered the room"}, to = room)
     rooms[room]["members"] += 1
+    if rooms[room]["members"] == 1:
+        session['host'] = name
+    elif rooms[room]["members"] == 2:
+        session['join'] = name
     print(f"{name} joined room {room}")
     
 @socketio.on('makeMove')
 def handle_move(data):
     room = session.get("room")
-    if data['content'] == "X" and (data['turn'] % 2 == 0):
+    name = session.get("name")
+    if data['content'] == "X" and (data['turn'] % 2 == 0) and (name == session.get("host")): # neu ten trung voi th host thi choi X dc thoi
         data['turn'] += 1
         emit('moveMade', data, to= room)   # emit la phat su kien 'move' cho client, gui move cho room
-    elif data['content'] == "O" and (data['turn'] % 2 != 0):
+    elif data['content'] == "O" and (data['turn'] % 2 != 0 and (name == session.get("join"))): # neu ten trung voi th join thi choi O dc thoi
         data['turn'] += 1
         emit('moveMade', data, to= room)
     else:
