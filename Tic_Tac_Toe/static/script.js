@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     turn = 0
     let finished = true
     let boardSize = Math.sqrt(cells.length);
-    var board = new Array(boardSize * boardSize)
+
     // Add click event listener to each cell
     cells.forEach(cell => {
         cell.addEventListener('click', function(event) {
