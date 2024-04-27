@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Single Player</title>
+    <title>Computer</title>
 </head>
 <body>
-    <h1>Single Player</h1>
+    <h1>Computer</h1>
+
+    <h2>Select size</h2>
     <form action="/size" method="post">
         <button type="submit" name="size" value="3">3x3</button>
         <button type="submit" name="size" value="4">4x4</button>
         <button type="submit" name="size" value="5">5x5</button>
         <button type="submit" name="size" value="6">6x6</button>
     </form>
+
+    <h2>Select difficulty</h2>
+    <form action="/difficulty" method="post">
+        <button type="submit" name="difficulty" value="easy">Easy</button>
+        <button type="submit" name="difficulty" value="medium">Medium</button>
+        <button type="submit" name="difficulty" value="hard">Hard</button>
+    </form>
+
+    <h2>Select shape</h2>
+    <!-- if the player chooses X -> go first, else, go last -->
 </body>
 </html>

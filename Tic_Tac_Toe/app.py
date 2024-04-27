@@ -34,7 +34,7 @@ def menu():
 def mode():
     if request.method == "POST":
         mode = request.form.get('mode')  # Get the selected mode
-        if mode == "Single Player":
+        if mode == "Computer":
             return render_template('size.html')  
     return render_template('home.html') 
     
