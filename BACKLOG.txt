@@ -2,5 +2,5 @@ Việc cần làm:
 1. Bổ sung tính năng chọn X hoặc O
 2. Có màn hình có thể lựa chọn Rematch hoặc Exit
 3. Hoàn thiện cơ bản phần front end
-4.Back end match với phần front end của first_page, computer_mode, friend.
+4. Back end match với phần front end của first_page, computer_mode, friend_join, friend_create.
 5. Thêm các tính năng đăng nhập, tạo tài khoản, leaderboard,...

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Friend mode</title>
+    <link rel="stylesheet" type="text/css" href="style_box.css">
+<style>
+    h1, h2 {text-align: center}
+</style>
+</head>
+<body>
+    <h1>Friend Mode</h1>
+    <div class="radio-container">
+        <div class="radio-inputs">
+            <label class="radio">
+                <input type="radio" name="choose" value="Create">
+                <span class="name">Create</span>
+            </label>
+
+            <label class="radio">
+                <input type="radio" name="choose" value="Join" checked="">
+                <span class="name">Join</span>
+            </label>
+        </div>
+
+    </div>
+
+    <div class="radio-container">
+      <div class="join">
+        <input type="text" placeholder="Room Code" name="code" value="{{code}}" />
+        <button type="submit" name="join">Join a Room</button>
+      </div>
+    </div>  
+</body>
+</html>
