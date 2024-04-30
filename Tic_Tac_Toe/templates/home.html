@@ -6,16 +6,17 @@
     <title>Room</title>
     <style>
         /* CSS styling for tabs */
-        .tab {
-            display: none;
-        }
-        .active {
-            display: block;
-        }
+        
         h1, h2{
           text-align: center;
         }
     </style>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+      integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+      crossorigin="anonymous"
+    ></script>
 
     <link 
         rel="stylesheet" 
@@ -24,15 +25,26 @@
     />
 </head>
 <body>
+   
     <!-- Create and Join tabs -->
     <div class="tabs">
         <button onclick="showTab('create')" class="tab-button">Create</button>
         <button onclick="showTab('join')" class="tab-button">Join</button>
     </div>
-
+    <form action = "/home" method="post" class="buttons">
+      <div id = "name">
+        <label>Name:</label>
+        <input
+          type="text"
+          placeholder="Pick a name!"
+          name="name"
+          value="{{name}}"
+        />
+      </div>
     <!-- Create Room Interface -->
     <div id="create" class="tab active">
         <!-- Add your create room form here -->
+        
         <h2>Select Size</h2>
         <div class="radio-container">
           <div class="radio-inputs">
@@ -73,35 +85,26 @@
           </div>
         </div>
         <div class="radio-container">
-          <button type="submit" name="CREATE">CREATE</button>
+          <button type="submit" name="create" class="create-btn">Create a Room</button>
         </div>
     </div>
 
     <!-- Join Room Interface -->
     <div id="join" class="tab">
-        <h2>Join Room</h2>
+
         <!-- Add your join room form here -->
+        
         <div class="radio-container">
-          <div class="join">
-            <div>
-              
-              <input
-                type="text"
-                placeholder="Pick a name!"
-                name="name"
-                value="{{name}}"
-              />
-            </div>
-            <div class="join">
-              <input type="text" placeholder="Room Id" name="code" value="{{code}}" />
-            </div>
-          </div>
-        </div>  
-        <div class="radio-container">
-          <button type="submit" name="JOIN">JOIN</button>
+          <input type="text" placeholder="Room Code" name="code" value="{{code}}" />
+          <button type="submit" name="join">Join a Room</button>
         </div>
     </div>
-
+    {% if error %}
+  <ul>
+    <li>{{error}}</li>
+  </ul>
+  {% endif %}
+  </form>
     <script>
         // JavaScript to toggle between tabs
         function showTab(tabName) {
@@ -110,5 +113,6 @@
             document.getElementById(tabName).classList.add('active');
         }
     </script>
+
 </body>
 </html>
