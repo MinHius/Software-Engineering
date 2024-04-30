@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     turn = 0
     let finished = true
     let boardSize = Math.sqrt(cells.length);
-    var board = new Array(boardSize * boardSize)
+
     // Add click event listener to each cell
     cells.forEach((cell, index) => {
         cell.addEventListener('click', function(event) {
@@ -18,8 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 this.textContent = "X"
                 // Start the game tracker
                 finished = false
-                turn++;
-
+                turn = turn + 1;
             }
 
             finished = false;
@@ -29,14 +28,17 @@ document.addEventListener("DOMContentLoaded", function() {
             if (winner === -1) {
                 alert("Player X wins!");
                 finished = true
+                turn = 0;
                 resetBoard(cells);
             } else if (winner === 1) {
                 alert("Player O wins!");
                 finished = true
+                turn = 0;
                 resetBoard(cells);
             } else if (winner === 0) {
                 alert("It's a tie!");
                 finished = true
+                turn = 0;
                 resetBoard(cells);
             } 
 
@@ -196,14 +198,17 @@ function performRandomAIMove(cells) {
     if (winner === -1) {
         alert("Player X wins!");
         finished = true
+        turn = 0;
         resetBoard(cells);
     } else if (winner === 1) {
         alert("Player O wins!");
         finished = true
+        turn = 0;
         resetBoard(cells);
     } else if (winner === 0) {
         alert("It's a tie!");
         finished = true
+        turn = 0;
         resetBoard(cells);
     } 
 }
@@ -224,14 +229,17 @@ function performMinimaxAIMove(cells, boardSize) {
     if (winner === -1) {
         alert("Player X wins!");
         finished = true
+        turn = 0;
         resetBoard(cells);
     } else if (winner === 1) {
         alert("Player O wins!");
         finished = true
+        turn = 0;
         resetBoard(cells);
     } else if (winner === 0) {
         alert("It's a tie!");
         finished = true
+        turn = 0;
         resetBoard(cells);
     } 
 }
@@ -243,7 +251,6 @@ function bestMove(cells, boardSize) {
     let bestMove = null;
     // Convert NodeList to array
     cells = Array.from(cells);
-    console.log(cells)
 
     for (let l = 0; l < boardSize; l++) {
         for (let k = 0; k < boardSize; k++) {
@@ -255,9 +262,7 @@ function bestMove(cells, boardSize) {
                     return newCell;
                 });  // co 2 loai copy la: shallow vs deep, cai nay la deep, thay doi o copy k thay doi o origin
                 newCells[l * boardSize + k].textContent = 'O';
-                console.log(newCells, newCells[8].textContent)
                 let score = minimax(newCells, 0, false, -Infinity, Infinity, boardSize);
-                console.log("score", score)
                 if (score > bestScore) {
                     bestScore = score;
                     bestMove = [l, k]
@@ -265,7 +270,6 @@ function bestMove(cells, boardSize) {
             }
         }
     }
-    console.log("bestScore", bestScore)
     return bestMove
 }
 
@@ -273,7 +277,6 @@ function bestMove(cells, boardSize) {
 function minimax(Cells, depth, isMaxing, alpha, beta, boardSize) {
 
     let result = checkState(Cells, boardSize);
-    console.log("check_result" , result)
     if (result !== undefined) {    // luc dau la null nma trong js thi cai lenh return; no tra ve undefined
         return result;         // kha nang la 2 cai nay
     }
@@ -298,10 +301,8 @@ function minimax(Cells, depth, isMaxing, alpha, beta, boardSize) {
         let bestScore = Infinity;
         for (let l = 0; l < boardSize; l++) {
             for (let k = 0; k < boardSize; k++) {
-                console.log("cell.content", Cells[l * boardSize + k].textContent, Cells)
                 if (Cells[l * boardSize + k].textContent === "" ) {
                     Cells[l * boardSize + k].textContent = 'X';
-                    console.log("check")
                     let score = minimax(Cells, depth + 1, true, alpha, beta, boardSize);
                     Cells[l * boardSize + k].textContent = ''; // Revert back the move
                     bestScore = Math.min(score, bestScore); 
