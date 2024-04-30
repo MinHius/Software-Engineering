@@ -2,75 +2,66 @@
 <html>
 <head>
   <title>Computer Mode</title>
-  <link rel="stylesheet" type="text/css" href="style_box.css">
+  <link 
+        rel="stylesheet" 
+        type="text/css" 
+        href="{{url_for('static', filename='style_box.css')}}"
+    />
 <style>
   h1, h2 {text-align: center;}
 </style>
 </head>
 <body>
   <h1>Computer Mode</h1>
-
   <h2>Select Size</h2>
-  <div class="radio-container">
-    <div class="radio-inputs">
-      <label class="radio">
-        <input type="radio" name="size" value="3x3" checked="">
-        <span class="name">3x3</span>
-      </label>
+  <form action="/customize" method="post">
+    <div class="radio-container">
+      <div class="radio-inputs">
+        <label class="radio">
+          <input type="radio" name="size" value="3" checked="">
+          <span class="name">3x3</span>
+        </label>
 
-      <label class="radio">
-        <input type="radio" name="size" value="4x4">
-        <span class="name">4x4</span>
-      </label>
-      
-      <label class="radio">
-        <input type="radio" name="size" value="5x5">
-        <span class="name">5x5</span>
-      </label>
+        <label class="radio">
+          <input type="radio" name="size" value="4">
+          <span class="name">4x4</span>
+        </label>
+        
+        <label class="radio">
+          <input type="radio" name="size" value="5">
+          <span class="name">5x5</span>
+        </label>
 
-      <label class="radio">
-        <input type="radio" name="size" value="6x6">
-        <span class="name">6x6</span>
-      </label>
+        <label class="radio">
+          <input type="radio" name="size" value="6">
+          <span class="name">6x6</span>
+        </label>
+      </div>
     </div>
-  </div>
 
-  <h2>Select Level</h2>
-  <div class="radio-container">
-    <div class="radio-inputs">
-      <label class="radio">
-        <input type="radio" name="level" value="Easy" checked="">
-        <span class="name">Easy</span>
-      </label>
+    <h2>Select Level</h2>
+    <div class="radio-container">
+      <div class="radio-inputs">
+        <label class="radio">
+          <input type="radio" name="difficulty" value="easy" checked="">
+          <span class="name">Easy</span>
+        </label>
 
-      <label class="radio">
-        <input type="radio" name="level" value="Medium">
-        <span class="name">Medium</span>
-      </label>
-      
-      <label class="radio">
-        <input type="radio" name="level" value="Hard">
-        <span class="name">Hard</span>
-      </label>
+        <label class="radio">
+          <input type="radio" name="difficulty" value="medium">
+          <span class="name">Medium</span>
+        </label>
+        
+        <label class="radio">
+          <input type="radio" name="difficulty" value="hard">
+          <span class="name">Hard</span>
+        </label>
+      </div>
     </div>
-  </div>
 
-  <h2>Select Shape</h2>
-  <div class="radio-container">
-    <div class="radio-inputs">
-      <label class="radio">
-        <input type="radio" name="shape" value="X" checked="">
-        <span class="name">X</span>
-      </label>
-
-      <label class="radio">
-        <input type="radio" name="shape" value="O">
-        <span class="name">O</span>
-      </label>
+    <div class="radio-container">
+      <button type="submit" name="START">START</button>
     </div>
-  </div>
-  <div class="radio-container">
-    <button type="submit" name="START">START</button>
-  </div>
+  </form>
 </body>
 </html>

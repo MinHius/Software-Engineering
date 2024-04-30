@@ -27,7 +27,7 @@ def generate_unique_code(length):
 # Route for the menu page
 @app.route("/")
 def menu():
-    return render_template('menu.html')
+    return render_template('first_page.html')
 
 # Route for mode selection page
 @app.route("/mode", methods=['POST'])
@@ -35,23 +35,19 @@ def mode():
     if request.method == "POST":
         mode = request.form.get('mode')  # Get the selected mode
         if mode == "Computer":
-            return render_template('size.html')  
+            return render_template('computer_mode.html')  
     return render_template('home.html') 
     
     
 
 
-@app.route("/size", methods=['POST'])
+@app.route("/customize", methods=['POST'])
 def size():
     if request.method == "POST":
         size = request.form.get('size')  # Get the selected mode
         global size_picked
         size_picked = int(size)
-        return render_template('difficulty.html')
 
-@app.route("/difficulty", methods=['POST'])
-def difficulty():
-    if request.method == "POST":
         difficulty = request.form.get('difficulty')  # Get the selected mode
         if size_picked == 4:
             return render_template('4x4.html', difficulty = difficulty)

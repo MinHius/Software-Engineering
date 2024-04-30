@@ -5,11 +5,11 @@
     <link 
         rel="stylesheet" 
         type="text/css" 
-        href="{{url_for('static', filename="style_box.css")}}"
+        href="{{url_for('static', filename='style_box.css')}}"
     />
-<style>
-    h1, h2 {text-align: center}
-</style>
+    <style>
+        h1, h2 {text-align: center}
+    </style>
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
@@ -18,12 +18,12 @@
         <div class="radio-container">
             <div class="radio-inputs">
                 <label class="radio">
-                    <input type="radio" name="menu" value="Computer" checked="">
+                    <input type="submit" name="mode" value="Computer" checked="">
                     <span class="name">Computer</span>
                 </label>
 
                 <label class="radio">
-                    <input type="radio" name="menu" value="Friend">
+                    <input type="submit" name="mode" value="Friend">
                     <span class="name">Friend</span>
                 </label>
             </div>
