@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     turn = 0
     let finished = true
     let boardSize = Math.sqrt(cells.length);
+    change = 1;
 
     // Add click event listener to each cell
     cells.forEach((cell, index) => {
@@ -39,14 +40,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 finished = true
                 resetBoard(cells);
             } 
-
             if (!finished) {
                 // Perform AI move
                 if (difficulty === "easy") {
                     performRandomAIMove(cells)
-                }
-                else if (difficulty === "medium") {
-                    performRandomAIMove(cells);
                 }
                 else if (difficulty === "hard") {
                     if (turn < boardSize - 1) {
@@ -63,87 +60,101 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function checkState(boardSize, cells) {
-    if (boardSize === 3) {
-        return checkState3(cells);
-    }
+    return checkDiag(cells, boardSize);
 }
 
-// Function to check for a winner
-function checkState3(cells) {
-
+// Function to check the diagonal for a winner
+function checkDiag(cells, boardSize) {
     // Check the main diagonal
-    if (cells[0].textContent !== '' && cells[0].textContent === cells[4].textContent && cells[4].textContent === cells[8].textContent) {
-        if (cells[0].textContent === "X" && cells[4].textContent === "X" && cells[8].textContent === "X") {
-            return -1;
-        } else if (cells[0].textContent === "O" && cells[4].textContent === "O" && cells[8].textContent === "O") {
-            return 1;
+    let j1 = 0;
+    let j2 = 0;
+    for (let i = 0; i < boardSize - 1; i++) {
+        if (cells[i * boardSize + i].textContent === cells[(i + 1) * (boardSize + 1)].textContent && cells[i * boardSize + i].textContent === "X" && cells[(i + 1) * (boardSize + 1)].textContent === "X") {
+            j1++;
         }
     }
+    if (j1 + 1 === boardSize) {
+        return -1;
+    }
 
+    for (let i = 0; i < boardSize - 1; i++) {
+        if (cells[i * boardSize + i].textContent === cells[(i + 1) * (boardSize + 1)].textContent && cells[i * boardSize + i].textContent === "O" && cells[(i + 1) * (boardSize + 1)].textContent === "O") {
+            j2++;
+        }
+    }
+    if (j2 + 1 === boardSize) {
+        return 1;
+    }
     // Check the secondary diagonal
-    if (cells[2].textContent !== '' && cells[2].textContent === cells[4].textContent && cells[4].textContent === cells[6].textContent) {
-        if (cells[2].textContent === "X" && cells[4].textContent === "X" && cells[6].textContent === "X") {
-            return -1;
-        } else if (cells[2].textContent === "O" && cells[4].textContent === "O" && cells[6].textContent === "O") {
-            return 1;
+    k1 = 0
+    k2 = 0
+    for (let i = 0; i < boardSize - 1; i++) {
+        if (cells[(i + 1) * (boardSize - 1)].textContent === cells[(i + 2) * (boardSize - 1)].textContent && cells[(i + 1) * (boardSize - 1)].textContent === "X" && cells[(i + 2) * (boardSize - 1)].textContent === "X") {
+            k1++;
         }
     }
-
-    // Check the 1st col.
-    if (cells[0].textContent !== '' && cells[0].textContent === cells[3].textContent && cells[3].textContent === cells[6].textContent) {
-        if (cells[0].textContent === "X" && cells[3].textContent === "X" && cells[6].textContent === "X") {
-            return -1;
-        } else if (cells[0].textContent === "O" && cells[3].textContent === "O" && cells[6].textContent === "O") {
-            return 1;
+    if (k1 + 1 === boardSize) {
+        return -1;
+    }
+    for (let i = 0; i < boardSize - 1; i++) {
+        if (cells[(i + 1) * (boardSize - 1)].textContent === cells[(i + 2) * (boardSize - 1)].textContent && cells[(i + 1) * (boardSize - 1)].textContent === "O" && cells[(i + 2) * (boardSize - 1)].textContent === "O") {
+            k2++;
         }
     }
+    if (k2 + 1 === boardSize) {
+        return 1;
+    }
+    return checkCol(cells, boardSize);
+}
 
-    // Check the 2nd col.
-    if (cells[1].textContent !== '' && cells[1].textContent === cells[4].textContent && cells[4].textContent === cells[7].textContent) {
-        if (cells[1].textContent === "X" && cells[4].textContent === "X" && cells[7].textContent === "X") {
+// Function to check columns for a winner
+function checkCol(cells, boardSize) {
+    let i = 0;
+    let j = 0;
+    for (let k = 0; k < boardSize; k++) {
+        for (let l = 0; l < boardSize - 1; l++) {
+            if (cells[l * boardSize + k].textContent === cells[(l + 1) * boardSize + k].textContent && cells[l * boardSize + k].textContent === 'X' && cells[(l + 1) * boardSize + k].textContent === 'X') {
+                i++;
+            }
+            if (cells[l * boardSize + k].textContent === cells[(l + 1) * boardSize + k].textContent && cells[l * boardSize + k].textContent === 'O' && cells[(l + 1) * boardSize + k].textContent === 'O') {
+                j++;
+            }
+        }
+        if (i + 1 === boardSize) {
             return -1;
-        } else if (cells[1].textContent === "O" && cells[4].textContent === "O" && cells[7].textContent === "O") {
+        } else if (j + 1 === boardSize) {
             return 1;
+        } else {
+            i = 0;
+            j = 0;
         }
     }
+    return checkRow(cells, boardSize);
+}
 
-    // Check the 3rd col.
-    if (cells[2].textContent !== '' && cells[2].textContent === cells[5].textContent && cells[5].textContent === cells[8].textContent) {
-        if (cells[2].textContent === "X" && cells[5].textContent === "X" && cells[8].textContent === "X") {
+// Function to check rows for a winner
+function checkRow(cells, boardSize) {
+    let i = 0;
+    let j = 0;
+    for (let l = 0; l < boardSize; l++) {
+        for (let k = 0; k < boardSize - 1; k++) {
+            if (cells[l * boardSize + k].textContent === cells[l * boardSize + k + 1].textContent && cells[l * boardSize + k].textContent === 'X' && cells[l * boardSize + k + 1].textContent === 'X') {
+                i++;
+            }
+            if (cells[l * boardSize + k].textContent === cells[l * boardSize + k + 1].textContent && cells[l * boardSize + k].textContent === 'O' && cells[l * boardSize + k + 1].textContent === 'O') {
+                j++;
+            }
+        }
+        if (i + 1 === boardSize) {
             return -1;
-        } else if (cells[2].textContent === "O" && cells[5].textContent === "O" && cells[8].textContent === "O") {
+        } else if (j + 1 === boardSize) {
             return 1;
+        } else {
+            i = 0;
+            j = 0;
         }
     }
-
-    // Check the 1st row.
-    if (cells[0].textContent !== '' && cells[0].textContent === cells[1].textContent && cells[1].textContent === cells[2].textContent) {
-        if (cells[0].textContent === "X" && cells[1].textContent === "X" && cells[2].textContent === "X") {
-            return -1;
-        } else if (cells[0].textContent === "O" && cells[1].textContent === "O" && cells[2].textContent === "O") {
-            return 1;
-        }
-    }
-
-    // Check the 2nd row.
-    if (cells[3].textContent !== '' && cells[3].textContent === cells[4].textContent && cells[4].textContent === cells[5].textContent) {
-        if (cells[3].textContent === "X" && cells[4].textContent === "X" && cells[5].textContent === "X") {
-            return -1;
-        } else if (cells[3].textContent === "O" && cells[4].textContent === "O" && cells[5].textContent === "O") {
-            return 1;
-        }
-    }
-
-    // Check the 3rd row.
-    if (cells[6].textContent !== '' && cells[6].textContent === cells[7].textContent && cells[7].textContent === cells[8].textContent) {
-        if (cells[6].textContent === "X" && cells[7].textContent === "X" && cells[8].textContent === "X") {
-            return -1;
-        } else if (cells[6].textContent === "O" && cells[7].textContent === "O" && cells[8].textContent === "O") {
-            return 1;
-        }
-    }
-
-    return checkTie(cells);
+    return checkTie(cells, boardSize);
 }
 
 // Function to check for a tie
@@ -167,7 +178,6 @@ function resetBoard(cells) {
 function performRandomAIMove(cells) {
     // Find available empty cells
     const emptyCells = [...cells].filter(cell => !cell.textContent);
-    // Select a random empty cell for AI move
     const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
     // Change the content of the selected cell to "O"
     randomCell.textContent = "O";
@@ -195,6 +205,7 @@ function performMinimaxAIMove(cells, boardSize) {
     let cellIndex = move[0] * boardSize + move[1];
     // Change the content of the selected cell to "O"
     cells[cellIndex].textContent = "O";
+    
 
     // Check for a winner
     winner = checkState(boardSize, cells);
@@ -221,7 +232,6 @@ function bestMove(cells, boardSize) {
     let bestMove = null;
     // Convert NodeList to array
     cells = Array.from(cells);
-    console.log(cells)
 
     for (let l = 0; l < boardSize; l++) {
         for (let k = 0; k < boardSize; k++) {
@@ -233,9 +243,7 @@ function bestMove(cells, boardSize) {
                     return newCell;
                 });  // co 2 loai copy la: shallow vs deep, cai nay la deep, thay doi o copy k thay doi o origin
                 newCells[l * boardSize + k].textContent = 'O';
-                console.log(newCells, newCells[8].textContent)
                 let score = minimax(newCells, 0, false, -Infinity, Infinity, boardSize);
-                console.log("score", score)
                 if (score > bestScore) {
                     bestScore = score;
                     bestMove = [l, k]
@@ -243,7 +251,6 @@ function bestMove(cells, boardSize) {
             }
         }
     }
-    console.log("bestScore", bestScore)
     return bestMove
 }
 
@@ -251,7 +258,6 @@ function bestMove(cells, boardSize) {
 function minimax(Cells, depth, isMaxing, alpha, beta, boardSize) {
 
     let result = checkState(boardSize, Cells);
-    console.log("check_result" , result)
     if (result !== undefined) {    // luc dau la null nma trong js thi cai lenh return; no tra ve undefined
         return result;         // kha nang la 2 cai nay
     }
@@ -276,10 +282,8 @@ function minimax(Cells, depth, isMaxing, alpha, beta, boardSize) {
         let bestScore = Infinity;
         for (let l = 0; l < boardSize; l++) {
             for (let k = 0; k < boardSize; k++) {
-                console.log("cell.content", Cells[l * boardSize + k].textContent, Cells)
                 if (Cells[l * boardSize + k].textContent === "" ) {
                     Cells[l * boardSize + k].textContent = 'X';
-                    console.log("check")
                     let score = minimax(Cells, depth + 1, true, alpha, beta, boardSize);
                     Cells[l * boardSize + k].textContent = ''; // Revert back the move
                     bestScore = Math.min(score, bestScore); 
@@ -293,6 +297,5 @@ function minimax(Cells, depth, isMaxing, alpha, beta, boardSize) {
         return bestScore;
     }
 }
-
 
 

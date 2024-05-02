@@ -46,11 +46,6 @@
           <input type="radio" name="difficulty" value="easy" checked="">
           <span class="name">Easy</span>
         </label>
-
-        <label class="radio">
-          <input type="radio" name="difficulty" value="medium">
-          <span class="name">Medium</span>
-        </label>
         
         <label class="radio">
           <input type="radio" name="difficulty" value="hard">
@@ -60,8 +55,11 @@
     </div>
 
     <div class="radio-container">
-      <button type="submit" name="START">START</button>
+      <button type="submit" name="START" style="margin-top: 15px;">START</button>
     </div>
+
+    <p style="vertical-align: middle;">{{ error }}</p>
+
   </form>
 </body>
 </html>

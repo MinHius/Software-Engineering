@@ -50,10 +50,16 @@ def size():
 
         difficulty = request.form.get('difficulty')  # Get the selected mode
         if size_picked == 4:
+            if difficulty != 'easy':
+                return render_template('computer_mode.html', error = "Due to computational limits, gameboard larger than 3 will be in easy mode.", size = size_picked)
             return render_template('4x4.html', difficulty = difficulty)
         if size_picked == 5:
+            if difficulty != 'easy':
+                return render_template('computer_mode.html', error = "Due to computational limits, gameboard larger than 3 will be in easy mode.", size = size_picked)
             return render_template('5x5.html', difficulty = difficulty)
         if size_picked == 6:
+            if difficulty != 'easy':
+                return render_template('computer_mode.html', error = "Due to computational limits, gameboard larger than 3 will be in easy mode.", size = size_picked)
             return render_template('6x6.html', difficulty = difficulty)
     return render_template('3x3.html', difficulty = difficulty)
         
