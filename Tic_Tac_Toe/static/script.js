@@ -22,10 +22,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
             }
 
-            
 
             // Check for a winner
-            let winner = checkState(cells);
+            let winner = checkState(boardSize, cells);
             // Determine the result
             if (winner === -1) {
                 alert("Player X wins!");
@@ -40,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 finished = true
                 resetBoard(cells);
             } 
+
             if (!finished) {
                 // Perform AI move
                 if (difficulty === "easy") {
@@ -62,9 +62,14 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+function checkState(boardSize, cells) {
+    if (boardSize === 3) {
+        return checkState3(cells);
+    }
+}
 
 // Function to check for a winner
-function checkState(cells) {
+function checkState3(cells) {
 
     // Check the main diagonal
     if (cells[0].textContent !== '' && cells[0].textContent === cells[4].textContent && cells[4].textContent === cells[8].textContent) {
@@ -169,7 +174,7 @@ function performRandomAIMove(cells) {
 
     finished = false
     // Check for a winner
-    let winner = checkState(cells);
+    let winner = checkState(boardSize, cells);
     // Determine the result
     if (winner === -1) {
         alert("Player X wins!");
@@ -192,7 +197,7 @@ function performMinimaxAIMove(cells, boardSize) {
     cells[cellIndex].textContent = "O";
 
     // Check for a winner
-    let winner = checkState(cells);
+    winner = checkState(boardSize, cells);
     // Determine the result
     if (winner === -1) {
         alert("Player X wins!");
@@ -245,7 +250,7 @@ function bestMove(cells, boardSize) {
 // Minimax algorithm with Alpha-Beta Pruning
 function minimax(Cells, depth, isMaxing, alpha, beta, boardSize) {
 
-    let result = checkState(Cells);
+    let result = checkState(boardSize, Cells);
     console.log("check_result" , result)
     if (result !== undefined) {    // luc dau la null nma trong js thi cai lenh return; no tra ve undefined
         return result;         // kha nang la 2 cai nay
