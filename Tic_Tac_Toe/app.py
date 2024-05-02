@@ -36,7 +36,7 @@ def mode():
         mode = request.form.get('mode')  # Get the selected mode
         if mode == "Computer":
             return render_template('computer_mode.html')  
-    return render_template('home.html') 
+    return render_template('friend_join.html') 
     
     
 
@@ -83,15 +83,15 @@ def home():
         create = request.form.get("create", False)
         
         if not name:
-            return render_template('home.html', error = "Please enter a name!", code = code, name = name)
+            return render_template('friend_join.html', error = "Please enter a name!", code = code, name = name)
         if join != False and not code:
-            return render_template('home.html', error = "Please enter a room code!", code = code, name = name)
+            return render_template('friend_join.html', error = "Please enter a room code!", code = code, name = name)
         room = code
         if create != False:
             room = generate_unique_code(4)  
             rooms[room] = {"members": 0}
         elif code not in rooms:    
-            return render_template('home.html', error = "Room does not exist!", code = code, name = name)
+            return render_template('friend_join.html', error = "Room does not exist!", code = code, name = name)
               
         session["room"] = room
         session["name"] = name 
@@ -101,7 +101,7 @@ def home():
             session['role'] = "O"
         return redirect(url_for("room"))     
               
-    return render_template('home.html')
+    return render_template('friend_join.html')
 
 
 @app.route("/room")
