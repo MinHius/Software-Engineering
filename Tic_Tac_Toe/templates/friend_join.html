@@ -10,6 +10,18 @@
 <body>
     <h1>Friend Mode</h1>
     <form action="/home" method="post">
+        
+
+        
+            <div class="Input">
+                <input class="Input-text" type="text" placeholder="Name" name="name" value="{{name}}" />
+                <label for="input" class="Input-label">Name</label>
+            </div>
+            <div class="Input">
+                <input class="Input-text" type="text" placeholder="Room Code" name="code" value="{{code}}" />
+                <label for="input" class="Input-label">Room Code</label>
+            </div>
+            
         <div class="radio-container">
             <div class="radio-inputs">
                 <label class="radio">
@@ -24,14 +36,7 @@
             </div>
 
         </div>
-
-        <div class="radio-container">
-        <div class="join">
-            <input type="text" placeholder="Room Code" name="code" value="{{code}}" />
-            <input type="text" placeholder="Name" name="name" value="{{name}}" />
-        </div>
-        </div> 
-        <p style="vertical-align: middle;">{{ error }}</p> 
+        <p style="text-align: center;">{{ error }}</p> 
     </form>
 </body>
 </html>
