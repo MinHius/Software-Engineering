@@ -6,10 +6,9 @@ Game Tic Tac Toe.
 * Trần Kim Thành
 
 # WEBGAME TIC TAC TOE.
-* Bao gồm nhiều chế độ chơi: Đấu thường, competitive, đấu với máy, đấu custom tạo room cho các player vào
-* Trong chế độ thường, custom , được chọn mode 3x3, 4x4 , deathmatch, ....
-* Trong chế độ competitive thì auto là deathmatch.
-* Các player có rank, vị trí trên BXH
+* Bao gồm nhiều chế độ chơi: Đấu thường hoặc đấu rank với người, và đấu với máy.
+* Trong chế độ competitive thì là deathmatch.
+* Các player có rank, vị trí trên BXH.
 * Việc tìm kiếm đối thủ là ngẫu nhiên, xếp cùng với những người cùng range điểm.
 
 # Ngôn ngữ sử dụng.
