@@ -19,6 +19,7 @@
                 // Start the game tracker
                 finished = false
                 turn++;
+
             }
 
             
@@ -165,7 +166,7 @@ function checkRow(cells, boardSize) {
 function checkTie(cells, boardSize) {
     for (let i = 0; i < cells.length; i++) {
         if (!cells[i].textContent) {
-            return;
+            return;        // van con o chua dien 
         }
     }
     return 0;
@@ -213,23 +214,27 @@ function performMinimaxAIMove(cells, boardSize) {
 }
 
 
-
-
 // Function to find the best move for AI
 function bestMove(cells, boardSize) {
     let bestScore = -Infinity;
     let bestMove = null;
-    
     // Convert NodeList to array
     cells = Array.from(cells);
+    console.log(cells)
 
     for (let l = 0; l < boardSize; l++) {
         for (let k = 0; k < boardSize; k++) {
             if (cells[l * boardSize + k].textContent === '') {
                 // Make a copy of the board
-                let newCells = [...cells];
+                let newCells = cells.map(cell => {
+                    const newCell = document.createElement('div');
+                    newCell.textContent = cell.textContent;
+                    return newCell;
+                });  // co 2 loai copy la: shallow vs deep, cai nay la deep, thay doi o copy k thay doi o origin
                 newCells[l * boardSize + k].textContent = 'O';
+                console.log(newCells, newCells[8].textContent)
                 let score = minimax(newCells, 0, false, -Infinity, Infinity, boardSize);
+                console.log("score", score)
                 if (score > bestScore) {
                     bestScore = score;
                     bestMove = [l, k]
@@ -237,6 +242,7 @@ function bestMove(cells, boardSize) {
             }
         }
     }
+    console.log("bestScore", bestScore)
     return bestMove
 }
 
@@ -244,15 +250,15 @@ function bestMove(cells, boardSize) {
 function minimax(Cells, depth, isMaxing, alpha, beta, boardSize) {
 
     let result = checkState(Cells, boardSize);
-    if (result !== null) {
-        return result;
+    console.log("check_result" , result)
+    if (result !== undefined) {    // luc dau la null nma trong js thi cai lenh return; no tra ve undefined
+        return result;         // kha nang la 2 cai nay
     }
-    
     if (isMaxing) {
         let bestScore = -Infinity;
         for (let l = 0; l < boardSize; l++) {
             for (let k = 0; k < boardSize; k++) {
-                if (Cells[l * boardSize + k].textContent === '') {
+                if (Cells[l * boardSize + k].textContent === "") {
                     Cells[l * boardSize + k].textContent = 'O';
                     let score = minimax(Cells, depth + 1, false, alpha, beta, boardSize);
                     Cells[l * boardSize + k].textContent = ''; // Revert back the move
@@ -269,9 +275,10 @@ function minimax(Cells, depth, isMaxing, alpha, beta, boardSize) {
         let bestScore = Infinity;
         for (let l = 0; l < boardSize; l++) {
             for (let k = 0; k < boardSize; k++) {
-                alert(bestScore)
-                if (Cells[l * boardSize + k].textContent === '') {
+                console.log("cell.content", Cells[l * boardSize + k].textContent, Cells)
+                if (Cells[l * boardSize + k].textContent === "" ) {
                     Cells[l * boardSize + k].textContent = 'X';
+                    console.log("check")
                     let score = minimax(Cells, depth + 1, true, alpha, beta, boardSize);
                     Cells[l * boardSize + k].textContent = ''; // Revert back the move
                     bestScore = Math.min(score, bestScore); 
