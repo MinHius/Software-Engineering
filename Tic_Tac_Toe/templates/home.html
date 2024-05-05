@@ -1,15 +1,118 @@
-{% extends 'base.html' %} {% block content %}
-<form action = "/login" method="post" class="buttons">
-  <h3>Tic Tac Toe PvP</h3>
-  <div class="join">
-    <input type="text" placeholder="Room Code" name="code" value="{{code}}" />
-    <button type="submit" name="join">Join a Room</button>
-  </div>
-  <button type="submit" name="create" class="create-btn">Create a Room</button>
-  {% if error %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room</title>
+    <style>
+        /* CSS styling for tabs */
+        
+        h1, h2{
+          text-align: center;
+        }
+    </style>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+      integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+      crossorigin="anonymous"
+    ></script>
+
+    <link 
+        rel="stylesheet" 
+        type="text/css" 
+        href="{{url_for('static', filename='style_box.css')}}"
+    />
+</head>
+<body>
+   
+    <!-- Create and Join tabs -->
+    <div class="tabs">
+        <button onclick="showTab('create')" class="tab-button">Create</button>
+        <button onclick="showTab('join')" class="tab-button">Join</button>
+    </div>
+    <form action = "/home" method="post" class="buttons">
+      <div id = "name">
+        <label>Name:</label>
+        <input
+          type="text"
+          placeholder="Pick a name!"
+          name="name"
+          value="{{name}}"
+        />
+      </div>
+    <!-- Create Room Interface -->
+    <div id="create" class="tab active">
+        <!-- Add your create room form here -->
+        
+        <h2>Select Size</h2>
+        <div class="radio-container">
+          <div class="radio-inputs">
+            <label class="radio">
+              <input type="radio" name="size" value="3x3" checked="">
+              <span class="name">3x3</span>
+            </label>
+      
+            <label class="radio">
+              <input type="radio" name="size" value="4x4">
+              <span class="name">4x4</span>
+            </label>
+            
+            <label class="radio">
+              <input type="radio" name="size" value="5x5">
+              <span class="name">5x5</span>
+            </label>
+      
+            <label class="radio">
+              <input type="radio" name="size" value="6x6">
+              <span class="name">6x6</span>
+            </label>
+          </div>
+        </div>
+
+        <h2>Select Shape</h2>
+        <div class="radio-container">
+          <div class="radio-inputs">
+            <label class="radio">
+              <input type="radio" name="shape" value="X" checked="">
+              <span class="name">X</span>
+            </label>
+      
+            <label class="radio">
+              <input type="radio" name="shape" value="O">
+              <span class="name">O</span>
+            </label>
+          </div>
+        </div>
+        <div class="radio-container">
+          <button type="submit" name="create" class="create-btn">Create a Room</button>
+        </div>
+    </div>
+
+    <!-- Join Room Interface -->
+    <div id="join" class="tab">
+
+        <!-- Add your join room form here -->
+        
+        <div class="radio-container">
+          <input type="text" placeholder="Room Code" name="code" value="{{code}}" />
+          <button type="submit" name="join">Join a Room</button>
+        </div>
+    </div>
+    {% if error %}
   <ul>
     <li>{{error}}</li>
   </ul>
   {% endif %}
-</form>
-{% endblock %}
+  </form>
+    <script>
+        // JavaScript to toggle between tabs
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
