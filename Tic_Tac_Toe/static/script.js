@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 finished = false
                 turn++;
 
+
             }
 
 
@@ -232,6 +233,7 @@ function bestMove(cells, boardSize) {
     let bestMove = null;
     // Convert NodeList to array
     cells = Array.from(cells);
+    console.log(cells)
 
     for (let l = 0; l < boardSize; l++) {
         for (let k = 0; k < boardSize; k++) {
@@ -243,7 +245,9 @@ function bestMove(cells, boardSize) {
                     return newCell;
                 });  // co 2 loai copy la: shallow vs deep, cai nay la deep, thay doi o copy k thay doi o origin
                 newCells[l * boardSize + k].textContent = 'O';
+                console.log(newCells, newCells[8].textContent)
                 let score = minimax(newCells, 0, false, -Infinity, Infinity, boardSize);
+                console.log("score", score)
                 if (score > bestScore) {
                     bestScore = score;
                     bestMove = [l, k]
@@ -251,6 +255,7 @@ function bestMove(cells, boardSize) {
             }
         }
     }
+    console.log("bestScore", bestScore)
     return bestMove
 }
 
@@ -282,8 +287,10 @@ function minimax(Cells, depth, isMaxing, alpha, beta, boardSize) {
         let bestScore = Infinity;
         for (let l = 0; l < boardSize; l++) {
             for (let k = 0; k < boardSize; k++) {
-                if (Cells[l * boardSize + k].textContent === "" ) {
+                alert(bestScore)
+                if (Cells[l * boardSize + k].textContent === '') {
                     Cells[l * boardSize + k].textContent = 'X';
+                    console.log("check")
                     let score = minimax(Cells, depth + 1, true, alpha, beta, boardSize);
                     Cells[l * boardSize + k].textContent = ''; // Revert back the move
                     bestScore = Math.min(score, bestScore); 
