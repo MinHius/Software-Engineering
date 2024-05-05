@@ -78,11 +78,6 @@ def size():
             return render_template('6x6.html', difficulty = difficulty)
     return render_template('3x3.html', difficulty = difficulty)
         
-    
-
-@app.route("/game", methods=['POST'])
-def game():
-    return render_template('room.html')
 
 
 
