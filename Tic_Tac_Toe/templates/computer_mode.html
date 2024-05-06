@@ -4,42 +4,51 @@
   <title>Computer Mode</title>
   <link 
         rel="stylesheet" 
-        type="text/css" 
-        href="{{url_for('static', filename='style_box.css')}}"
+        href="style1.css"
+        href="style_box.css"
     />
 <style>
   h1, h2 {text-align: center;}
 </style>
 </head>
 <body>
-  <h1>Computer Mode</h1>
-  <h2>Select Size</h2>
   <form action="/customize" method="post">
-    <div class="radio-container">
-      <div class="radio-inputs">
-        <label class="radio">
-          <input type="radio" name="size" value="3" checked="">
-          <span class="name">3x3</span>
-        </label>
+    
 
-        <label class="radio">
-          <input type="radio" name="size" value="4">
-          <span class="name">4x4</span>
-        </label>
-        
-        <label class="radio">
-          <input type="radio" name="size" value="5">
-          <span class="name">5x5</span>
-        </label>
-
-        <label class="radio">
-          <input type="radio" name="size" value="6">
-          <span class="name">6x6</span>
-        </label>
+    <div class="game-start__choices">
+      <header class="game-start__header">
+        <h4 class="heading-xs">Select Size</h4>
+      </header>
+      <div class="radio-container">
+        <div class="radio-inputs">
+          <label class="radio">
+            <input type="radio" name="size" value="3" checked="">
+            <span class="name">3x3</span>
+          </label>
+  
+          <label class="radio">
+            <input type="radio" name="size" value="4">
+            <span class="name">4x4</span>
+          </label>
+          
+          <label class="radio">
+            <input type="radio" name="size" value="5">
+            <span class="name">5x5</span>
+          </label>
+  
+          <label class="radio">
+            <input type="radio" name="size" value="6">
+            <span class="name">6x6</span>
+          </label>
+        </div>
       </div>
     </div>
 
-    <h2>Select Level</h2>
+
+    <div class="game-start__choices">
+      <header class="game-start__header">
+        <h4 class="heading-xs">Select Level</h4>
+      </header>
     <div class="radio-container">
       <div class="radio-inputs">
         <label class="radio">
@@ -53,10 +62,14 @@
         </label>
       </div>
     </div>
-
-    <div class="radio-container">
-      <button type="submit" name="START" style="margin-top: 15px;">START</button>
+ 
     </div>
+
+    <div class="game-start__buttons">
+      <button type="submit" name="START" class="btn btn--yellow">START</button>
+    </div>
+  </section>
+  </form>
 
     <p style="text-align: center;">{{ error }}</p>
 

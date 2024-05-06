@@ -4,31 +4,17 @@
     <title>Tic Tac Toe Menu</title>
     <link 
         rel="stylesheet" 
-        type="text/css" 
-        href="{{url_for('static', filename='style_box.css')}}"
+        href="style1.css"
     />
-    <style>
-        h1, h2 {text-align: center}
-    </style>
 </head>
 <body>
-    <h1>Tic Tac Toe</h1>
-    <h2>Select Game Mode</h2>
     <form action="/mode" method="post">
-        <div class="radio-container">
-            <div class="radio-inputs">
-                <label id="r1" class="radio">
-                    <input type="submit" name="mode" value="Computer" checked="">
-                    <span class="name">Computer</span>
-                </label>
-
-                <label id="r2" class="radio">
-                    <input type="submit" name="mode" value="Friend">
-                    <span class="name">Friend</span>
-                </label>
-            </div>
-
-        </div>
+        <section id="game-start" class="game-start container d-block">
+			<div class="game-start__buttons">
+				<button name="mode" value="Computer" class="btn btn--yellow">Computer Mode</button>
+				<button id="vs-player" class="btn btn--blue">Friend Mode</button>
+			</div>
+		</section>
     </form>
 </body>
 </html>
