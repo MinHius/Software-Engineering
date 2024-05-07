@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const cells = document.querySelectorAll('.gameplay__card');
     turn = 0
     let finished = true
-    let boardSize = Math.sqrt(cells.length);
     change = 1;
 
     // Add click event listener to each cell
@@ -27,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
             // Check for a winner
+            let boardSize = Math.sqrt(cells.length);
             let winner = checkState(boardSize, cells);
             // Determine the result
             if (winner === -1) {
@@ -45,14 +45,15 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!finished) {
                 // Perform AI move
                 if (difficulty === "easy") {
-                    performRandomAIMove(cells)
+                    performRandomAIMove(cells);
+
                 }
                 else if (difficulty === "hard") {
                     if (turn < boardSize - 1) {
-                        performRandomAIMove(cells)
+                        performRandomAIMove(cells);
                     }
                     else {
-                        performMinimaxAIMove(cells, boardSize)
+                        performMinimaxAIMove(cells, boardSize);
                     }
                     
                 }
@@ -183,6 +184,7 @@ function resetBoard(cells) {
 
 // Function to perform AI move
 function performRandomAIMove(cells) {
+    let boardSize = Math.sqrt(cells.length);
     // Find available empty cells
     const emptyCells = [...cells].filter(gameplay__card => !gameplay__card.textContent);
     const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
@@ -190,7 +192,7 @@ function performRandomAIMove(cells) {
     randomCell.textContent = "O";
     randomCell.classList.add('o-mark');
 
-    finished = false
+    finished = false;
     // Check for a winner
     let winner = checkState(boardSize, cells);
     // Determine the result
@@ -215,9 +217,8 @@ function performMinimaxAIMove(cells, boardSize) {
     cells[cellIndex].textContent = "O";
     cells[cellIndex].classList.add('o-mark');
     
-
     // Check for a winner
-    winner = checkState(boardSize, cells);
+    let winner = checkState(boardSize, cells);
     // Determine the result
     if (winner === -1) {
         alert("Player X wins!");

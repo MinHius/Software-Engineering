@@ -2,10 +2,9 @@ var turn = 0;
 var currentPlayer = "X";
 document.addEventListener("DOMContentLoaded", function() {
     var socketio = io()  // coi nhu la connect socket
-    const cells = document.querySelectorAll('.cell');
+    const cells = document.querySelectorAll('.gameplay__card');
     let finished = true
-    let boardSize = Math.sqrt(cells.length);
-    var board = new Array(boardSize * boardSize)
+
     socketio.on('moveMade', function(data) {
         const position = data.position
         const content = data.content
@@ -31,8 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     })
     // Add click event listener to each cell
-    cells.forEach((cell, index) => {
-        cell.addEventListener('click', function(event) {
+    cells.forEach((gameplay__card, index) => {
+        gameplay__card.addEventListener('click', function(event) {
             // Check if the cell is empty
             if (this.textContent === "X" || this.textContent === "O") {
                 alert("Invalid move!")
@@ -46,7 +45,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     position: index,
                     content: (turn % 2 === 0) ? "X" : "O",
                     playerTurn: currentPlayer === "X" ? "O" : "X",
-                    turn: turn
+                    turn: turn,
+                    classList: (turn % 2 === 0) ? ['x-mark'] : ['o-mark']
                 }
                 socketio.emit('makeMove', data)
             } 
@@ -166,8 +166,13 @@ function checkTie(cells, boardSize) {
 
 // Function to reset the game board
 function resetBoard(cells) {
-    cells.forEach(cell => {
-        cell.textContent = "";
+    cells.forEach(gameplay__card => {
+        gameplay__card.textContent = "";
+        if (gameplay__card.classList.contains('x-mark')) {
+            gameplay__card.classList.remove('x-mark');
+        } else if (gameplay__card.classList.contains('o-mark')) {
+            gameplay__card.classList.remove('o-mark');
+        }
     });
 }
 
