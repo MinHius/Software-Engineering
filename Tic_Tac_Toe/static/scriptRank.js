@@ -18,10 +18,12 @@ document.addEventListener("DOMContentLoaded", function() {
         // Determine the result
         if (winner === -1) {
             alert("Player X wins!");
+            socketio.emit('x_win')
             finished = true
             resetBoard(cells);
         } else if (winner === 1) {
             alert("Player O wins!");
+            socketio.emit('o_win')
             finished = true
             resetBoard(cells);
         } else if (winner === 0) {
@@ -170,4 +172,3 @@ function resetBoard(cells) {
         cell.textContent = "";
     });
 }
-
