@@ -295,7 +295,6 @@ function minimax(Cells, depth, isMaxing, alpha, beta, boardSize) {
         let bestScore = Infinity;
         for (let l = 0; l < boardSize; l++) {
             for (let k = 0; k < boardSize; k++) {
-                alert(bestScore)
                 if (Cells[l * boardSize + k].textContent === '') {
                     Cells[l * boardSize + k].textContent = 'X';
                     console.log("check")
