@@ -2,40 +2,22 @@
 <html>
 <head>
     <title>Friend mode</title>
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style_box.css')}}">
-<style>
-    h1, h2 {text-align: center}
-</style>
+    <link rel="stylesheet" href="style1.css">
+    <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&display=swap"
+    rel="stylesheet"
+    />
 </head>
 <body>
-    <h1>Friend Mode</h1>
     <form action="/home" method="post">
-        
-
-        
-            <div class="Input">
-                <input class="Input-text" type="text" placeholder="Name" name="name" value="{{name}}" />
-                <label for="input" class="Input-label">Name</label>
-            </div>
             <div class="Input">
                 <input class="Input-text" type="text" placeholder="Room Code" name="code" value="{{code}}" />
                 <label for="input" class="Input-label">Room Code</label>
             </div>
             
-        <div class="radio-container">
-            <div class="radio-inputs">
-                <label class="radio">
-                    <input type="submit" name="create" value="create">
-                    <span class="name">Create</span>
-                </label>
-
-                <label class="radio">
-                    <input type="submit" name="join" value="join" checked="">
-                    <span class="name">Join</span>
-                </label>
+            <div class="game-start__buttons">
+                <button type="submit" name="JOIN" class="btn btn--yellow">JOIN</button>
             </div>
-
-        </div>
         <p style="text-align: center;">{{ error }}</p> 
     </form>
 </body>
