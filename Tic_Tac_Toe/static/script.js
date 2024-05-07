@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const cells = document.querySelectorAll('.cell');
+    const cells = document.querySelectorAll('.gameplay__card');
     turn = 0
     let finished = true
     let boardSize = Math.sqrt(cells.length);
     change = 1;
 
     // Add click event listener to each cell
-    cells.forEach((cell, index) => {
-        cell.addEventListener('click', function(event) {
+    cells.forEach((gameplay__card, index) => {
+        gameplay__card.addEventListener('click', function(event) {
             // Check if the cell is empty
             if (this.textContent === "X" || this.textContent === "O") {
                 alert("Invalid move!")
@@ -16,7 +16,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (!this.textContent) {
                 // Change the content of the cell to "X"
-                this.textContent = "X"
+                this.textContent = "X";
+                this.classList.add('x-mark');
                 // Start the game tracker
                 finished = false
                 turn++;
@@ -170,18 +171,24 @@ function checkTie(cells) {
 
 // Function to reset the game board
 function resetBoard(cells) {
-    cells.forEach(cell => {
-        cell.textContent = "";
+    cells.forEach(gameplay__card => {
+        gameplay__card.textContent = "";
+        if (gameplay__card.classList.contains('x-mark')) {
+            gameplay__card.classList.remove('x-mark');
+        } else if (gameplay__card.classList.contains('o-mark')) {
+            gameplay__card.classList.remove('o-mark');
+        }
     });
 }
 
 // Function to perform AI move
 function performRandomAIMove(cells) {
     // Find available empty cells
-    const emptyCells = [...cells].filter(cell => !cell.textContent);
+    const emptyCells = [...cells].filter(gameplay__card => !gameplay__card.textContent);
     const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
     // Change the content of the selected cell to "O"
     randomCell.textContent = "O";
+    randomCell.classList.add('o-mark');
 
     finished = false
     // Check for a winner
@@ -206,6 +213,7 @@ function performMinimaxAIMove(cells, boardSize) {
     let cellIndex = move[0] * boardSize + move[1];
     // Change the content of the selected cell to "O"
     cells[cellIndex].textContent = "O";
+    cells[cellIndex].classList.add('o-mark');
     
 
     // Check for a winner
@@ -239,9 +247,9 @@ function bestMove(cells, boardSize) {
         for (let k = 0; k < boardSize; k++) {
             if (cells[l * boardSize + k].textContent === '') {
                 // Make a copy of the board
-                let newCells = cells.map(cell => {
+                let newCells = cells.map(gameplay__card => {
                     const newCell = document.createElement('div');
-                    newCell.textContent = cell.textContent;
+                    newCell.textContent = gameplay__card.textContent;
                     return newCell;
                 });  // co 2 loai copy la: shallow vs deep, cai nay la deep, thay doi o copy k thay doi o origin
                 newCells[l * boardSize + k].textContent = 'O';

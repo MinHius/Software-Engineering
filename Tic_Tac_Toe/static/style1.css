@@ -303,6 +303,18 @@ body {
   width: 7.2rem;
   height: 3.2rem; }
 
+
+.x-mark {
+  background-image: url("/static/svg/icon-x.svg");
+  /* Add any additional styling for the X mark */
+}
+
+.o-mark {
+  background-image: url("/static/svg/icon-o.svg");
+    /* Add any additional styling for the O mark */
+}
+
+
 .game-start {
   text-align: center;
   max-width: 90%;
@@ -485,6 +497,7 @@ body {
   }
   .gameplay__card {
     padding: 3.8rem;
+    color: #1f3641;
     background-color: #1f3641;
     box-shadow: inset 0 -0.8rem 0 #0f191e;
     border-radius: 1.5rem; }
@@ -583,4 +596,3 @@ body {
   .modal__buttons {
     margin-top: 3rem; }
 
-    
