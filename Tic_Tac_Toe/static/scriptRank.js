@@ -2,7 +2,7 @@ var turn = 0;
 var currentPlayer = "X";
 document.addEventListener("DOMContentLoaded", function() {
     var socketio = io()  // coi nhu la connect socket
-    const cells = document.querySelectorAll('.cell');
+    const cells = document.querySelectorAll('.gameplay__card');
     let finished = true
     let boardSize = Math.sqrt(cells.length);
 
@@ -33,8 +33,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     })
     // Add click event listener to each cell
-    cells.forEach((cell, index) => {
-        cell.addEventListener('click', function(event) {
+    cells.forEach((gameplay__card, index) => {
+        gameplay__card.addEventListener('click', function(event) {
             // Check if the cell is empty
             if (this.textContent === "X" || this.textContent === "O") {
                 alert("Invalid move!")
