@@ -9,8 +9,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const position = data.position
         const content = data.content
         const playerTurn = data.playerTurn
+        const icon = data.icon
         turn = data.turn
+
         cells[position].textContent = content
+        cells[position].classList.add(icon)
         currentPlayer = playerTurn
         // Check for a winner
         let winner = checkState(cells);
@@ -46,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     content: (turn % 2 === 0) ? "X" : "O",
                     playerTurn: currentPlayer === "X" ? "O" : "X",
                     turn: turn,
-                    classList: (turn % 2 === 0) ? ['x-mark'] : ['o-mark']
+                    icon: (turn % 2 === 0) ? 'x-mark' : 'o-mark'
                 }
                 socketio.emit('makeMove', data)
             } 
