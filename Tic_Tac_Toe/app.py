@@ -6,18 +6,18 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
 import time
+import sqlite3
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "kjdfhgkdjfhkgh"
 socketio = SocketIO(app)
 
 # Set MySQL data
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'dang28032004'
-app.config['MYSQL_DB'] = 'tictactoe'
+connect = sqlite3.connect('database.db')
+connect.execute( 
+    'CREATE TABLE IF NOT EXISTS accounts(id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(50) NOT NULL, password VARCHAR(255) NOT NULL, rankpoint INTEGER NOT NULL)')
 
-mysql = MySQL(app)
+
 
 # Dictionary to store game state for each room
 rooms = {}
@@ -88,15 +88,16 @@ def login():
     if request.method == 'POST' and 'name' in request.form and 'password' in request.form:
         password = request.form['password']
         userName = request.form['name']
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute(
-            'SELECT * FROM accounts WHERE username = % s AND password = % s',
-                  (userName, password, ))
-        user = cursor.fetchone()
+        with sqlite3.connect('database.db') as users:
+            cursor = users.cursor()
+            cursor.execute(
+            'SELECT * FROM accounts WHERE username = ? AND password = ?',
+                  (userName, password,))
+            user = cursor.fetchone()
         if user:
             session['loggedin'] = True
-            session['userid'] = user['id']
-            session['name'] = user['username']  # chu y cai nay 
+            session['userid'] = user[0]
+            session['name'] = user[1]  # chu y cai nay 
             message = 'Logged in successfully !'
             return render_template('multi.html',
                                    message=message)
@@ -121,18 +122,19 @@ def register():
     if request.method == 'POST' and 'name' in request.form and 'password' in request.form:
         userName = request.form['name']
         password = request.form['password']
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM accounts WHERE username = % s', (userName, ))
-        account = cursor.fetchone()
-        if account:
-            message = 'Account already exists !'
-        elif not userName or not password:
-            message = 'Please fill out the form !'
-        else:
-            cursor.execute('INSERT INTO accounts VALUES (NULL, % s, % s, 0)', (userName, password, ))
-            mysql.connection.commit()
-            message = 'You have successfully registered !'
-            return render_template('login.html')
+        with sqlite3.connect('database.db') as users:
+            cursor = users.cursor()
+            cursor.execute('SELECT * FROM accounts WHERE username = ?', (userName, ))
+            account = cursor.fetchone()
+            if account:
+                message = 'Account already exists !'
+            elif not userName or not password:
+                message = 'Please fill out the form !'
+            else:
+                cursor.execute('INSERT INTO accounts (username, password, rankpoint) VALUES (?, ?, 0)', (userName, password,))
+                users.commit()
+                message = 'You have successfully registered !'
+                return render_template('login.html')
     elif request.method == 'POST':
         message = 'Please fill out the form !'
     return render_template('register.html', message=message)
@@ -179,52 +181,53 @@ def waiting_rank():
     
     # tim trong database thang nao thoa man dieu kien 
     query1 = f"SELECT rankpoint FROM accounts WHERE id = {playerID}"
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute(query1)
-    player_rankpoint = cursor.fetchone()['rankpoint']
+    with sqlite3.connect("database.db") as users:
+        cursor = users.cursor()
+        cursor.execute(query1)
+        player_rankpoint = cursor.fetchone()[0]
 
-    min_range = player_rankpoint - 1000
-    max_range = player_rankpoint + 1000  # khoang tim kiem doi thu
+        min_range = player_rankpoint - 1000
+        max_range = player_rankpoint + 1000  # khoang tim kiem doi thu
                 
-    # tao truy van sql
-    query2 = f"SELECT * FROM accounts WHERE rankpoint >= {min_range} AND rankpoint <= {max_range}"
-    cursor.execute(query2)
-    opponents = cursor.fetchall()   # day la danh sach cac dict, moi dict la 1 hang (day la cac player co range diem phu hop)
-    try:
-        while True:
-            check = False
-            for opponent in opponents:    # xet tung thang player co range diem phu hop xem co dang find ko
-                opponent_id = opponent['id']
-                time.sleep(5)
-                print(waiting_player_rank)
-                # co th find va th oppo_id dang xet lai thuoc hang cho.
-                if waiting_player_rank and opponent_id in waiting_player_rank:
-                    opponent_id, room = waiting_player_rank.popitem()    
-                    print("1111")
-                    session["room"] = room    # session cua th join(th tim sau)
-                    session['join'] = playerID
-                    session['host'] = opponent_id
-                    host_join[opponent_id] = playerID
-                    return redirect(url_for("room_rank"))
-                # co thang dang find nma (th oppo_id ko nam trong hang cho) or (th oppo_id la thang thuoc range nhung th find thi out range) 
-                elif waiting_player_rank and opponent_id not in waiting_player_rank:  
-                    continue
-                # ko ai find
-                elif not waiting_player_rank:   
+        # tao truy van sql
+        query2 = f"SELECT * FROM accounts WHERE rankpoint >= {min_range} AND rankpoint <= {max_range}"
+        cursor.execute(query2)
+        opponents = cursor.fetchall()   # day la danh sach cac dict, moi dict la 1 hang (day la cac player co range diem phu hop)
+        try:
+            while True:
+                check = False
+                for opponent in opponents:    # xet tung thang player co range diem phu hop xem co dang find ko
+                    opponent_id = opponent[0]
+                    time.sleep(5)
+                    print(waiting_player_rank)
+                    # co th find va th oppo_id dang xet lai thuoc hang cho.
+                    if waiting_player_rank and opponent_id in waiting_player_rank:
+                        opponent_id, room = waiting_player_rank.popitem()    
+                        print("1111")
+                        session["room"] = room    # session cua th join(th tim sau)
+                        session['join'] = playerID
+                        session['host'] = opponent_id
+                        host_join[opponent_id] = playerID
+                        return redirect(url_for("room_rank"))
+                    # co thang dang find nma (th oppo_id ko nam trong hang cho) or (th oppo_id la thang thuoc range nhung th find thi out range) 
+                    elif waiting_player_rank and opponent_id not in waiting_player_rank:  
+                        continue
+                    # ko ai find
+                    elif not waiting_player_rank:   
+                        room = generate_unique_code(4)
+                        rooms[room] = {"members": 0}
+                        waiting_player_rank[playerID] = room
+                        session["room"] = room           # session cua th tao room truoc(find trc)
+                        return redirect(url_for("room_rank"))
+                if not check:   # find xong het 1 luot roi nma ko thay ai thoa man dieu kien (kp la ko ai find ma la ko tim dc ai thoa man dieu kien)
                     room = generate_unique_code(4)
                     rooms[room] = {"members": 0}
                     waiting_player_rank[playerID] = room
                     session["room"] = room           # session cua th tao room truoc(find trc)
                     return redirect(url_for("room_rank"))
-            if not check:   # find xong het 1 luot roi nma ko thay ai thoa man dieu kien (kp la ko ai find ma la ko tim dc ai thoa man dieu kien)
-                room = generate_unique_code(4)
-                rooms[room] = {"members": 0}
-                waiting_player_rank[playerID] = room
-                session["room"] = room           # session cua th tao room truoc(find trc)
-                return redirect(url_for("room_rank"))
-            
-    except Exception as e:
-        print(f"loi: {e}")           
+                
+        except Exception as e:
+            print(f"loi: {e}")           
     
 @app.route("/custom", methods = ['POST', 'GET'])
 def custom():
@@ -261,21 +264,22 @@ def x_win():
         join_id = id
         host_id = session.get('host')
     # truy van mysql player host
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("SELECT rankpoint FROM accounts WHERE id = %s", (host_id,))
-    result1 = cursor.fetchone()
-    current_points1 = result1['rankpoint']
-    # them diem th win
-    update_point1 = current_points1 + 50   # thuc ra la win + 50 + 50 vi cai su kien x_win nay duoc gui tu ca 2 client xong no dc chay 2 lan
-    cursor.execute("UPDATE accounts SET rankpoint = %s WHERE id = %s", (update_point1, host_id))
-    # tru diem th thua
-    cursor.execute("SELECT rankpoint FROM accounts WHERE id = %s", (join_id,))
-    result2 = cursor.fetchone()
-    current_points2 = result2['rankpoint']
-    update_point2 = current_points2 - 50
-    cursor.execute("UPDATE accounts SET rankpoint = %s WHERE id = %s", (update_point2, join_id))
-    
-    mysql.connection.commit()
+    with sqlite3.connect("database.db") as users:
+        cursor = users.cursor()
+        cursor.execute("SELECT rankpoint FROM accounts WHERE id = ?", (host_id,))
+        result1 = cursor.fetchone()
+        current_points1 = result1[0]
+        # them diem th win
+        update_point1 = current_points1 + 50   # thuc ra la win + 50 + 50 vi cai su kien x_win nay duoc gui tu ca 2 client xong no dc chay 2 lan
+        cursor.execute("UPDATE accounts SET rankpoint = ? WHERE id = ?", (update_point1, host_id))
+        # tru diem th thua
+        cursor.execute("SELECT rankpoint FROM accounts WHERE id = ?", (join_id,))
+        result2 = cursor.fetchone()
+        current_points2 = result2[0]
+        update_point2 = current_points2 - 50
+        cursor.execute("UPDATE accounts SET rankpoint = ? WHERE id = ?", (update_point2, join_id))
+        users.commit()
+
 
 
 @socketio.on('o_win')
@@ -289,21 +293,21 @@ def o_win():
         join_id = id
         host_id = session.get('host')
     # truy van mysql player host
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("SELECT rankpoint FROM accounts WHERE id = %s", (host_id,))
-    result1 = cursor.fetchone()
-    current_points1 = result1['rankpoint']
-    # them diem th win
-    update_point1 = current_points1 - 50
-    cursor.execute("UPDATE accounts SET rankpoint = %s WHERE id = %s", (update_point1, host_id))
-    # tru diem th thua
-    cursor.execute("SELECT rankpoint FROM accounts WHERE id = %s", (join_id,))
-    result2 = cursor.fetchone()
-    current_points2 = result2['rankpoint']
-    update_point2 = current_points2 + 50
-    cursor.execute("UPDATE accounts SET rankpoint = %s WHERE id = %s", (update_point2, join_id))
-    
-    mysql.connection.commit()
+    with sqlite3.connect("database.db") as users:
+        cursor = users.cursor()
+        cursor.execute("SELECT rankpoint FROM accounts WHERE id = ?", (host_id,))
+        result1 = cursor.fetchone()
+        current_points1 = result1[0]
+        # them diem th win
+        update_point1 = current_points1 - 50   # thuc ra la win + 50 + 50 vi cai su kien x_win nay duoc gui tu ca 2 client xong no dc chay 2 lan
+        cursor.execute("UPDATE accounts SET rankpoint = ? WHERE id = ?", (update_point1, host_id))
+        # tru diem th thua
+        cursor.execute("SELECT rankpoint FROM accounts WHERE id = ?", (join_id,))
+        result2 = cursor.fetchone()
+        current_points2 = result2[0]
+        update_point2 = current_points2 + 50
+        cursor.execute("UPDATE accounts SET rankpoint = ? WHERE id = ?", (update_point2, join_id))
+        users.commit()
 
 @app.route("/room")
 def room():
