@@ -1,30 +1,5 @@
 {% extends 'base.html' %} {% block content %}
-<style>
-    .hi{
-        color: green;
-    }
-    .type{
-        display: block;
-        margin-left: 80px;
-        margin-top: -15px;
-        border: 1px solid black;
-    }
-    .label{
-        margin-left: -150px;
-        font-weight: bold;
-    }
-    .label-pass{
-        margin-left: -160px;
-        font-weight: bold;
-    }
-    .btn{
-        margin-top: 20px;
-        width: 80px;
-        height: 25px;
-        background-color: orangered;
-        color: white;
-    }
-</style>
+
 <div class="container">
     <h2 class="hi" > Welcome to Register </h2>
     <form action="{{ url_for('register') }}" method="post" class = 'buttons'>
@@ -33,14 +8,12 @@
         {% endif %}
         <br>
         <div class="form-group">
-            <label class="label">Name:</label>
              <input class="type" type="text" class="form-control" id="name" name="name" placeholder="Enter name" name="name">
         </div>
         <div class="form-group">
-            <label class="label-pass">Password:</label>
         <input class="type" type="password" class="form-control" id="password" name="password" placeholder="Enter password" name="pswd">
         </div>    
-        <button class="btn" type="submit" class="btn btn-primary">Register</button>
+        <button class="btn btn--yellow" type="submit" class="btn btn-primary">Register</button>
         <p class="bottom">Already have an account?  <a class="bottom" href="{{url_for('login')}}"> Login here</a></p>
     </form>
 </div> 

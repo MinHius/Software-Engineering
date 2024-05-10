@@ -7,8 +7,11 @@
         href="{{url_for('static', filename='style1.css')}}"
     />
 </head>
-<body>
-    <form action="/mode" method="post">
+<body>  
+        <header>
+              TIC TAC TOE
+        </header>   
+        <form style="align-items: center;" action="/mode" method="post">
         <section id="game-start" class="game-start container d-block">
 			<div class="game-start__buttons">
 				<button name="mode" value="Computer" class="btn btn--yellow">Computer Mode</button>

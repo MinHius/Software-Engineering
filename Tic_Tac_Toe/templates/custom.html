@@ -12,21 +12,24 @@
     </div>
     <br>
     <div class="row">    
-        Logged in : <strong class="gfg">  {{session.name}} </strong>| <a href="{{ url_for('logout') }}"> Logout</a>
+        Name : <strong class="gfg">  {{session.name}} </strong>| <a href="{{ url_for('logout') }}"> Logout</a>
     </div>
     <br><br>    
+    <form action = "/custom" method="post" class="buttons">
+      <div class="join">
+        <input class="type" type="text" placeholder="Room Code" name="code" value="{{code}}" />
+        <br>
+        <br>
+        <button class="btn btn--yellow-small" type="submit" name="join">Join a Room</button>
+        <br>
+      </div>
+      <button class="btn btn--blue-small" type="submit" name="create" class="create-btn">Create a Room</button>
+      {% if error %}
+      <ul>
+        <li>{{error}}</li>
+      </ul>
+      {% endif %}
+    </form>
 </div>
-<form action = "/custom" method="post" class="buttons">
-    <h3>Tic Tac Toe PvP</h3>
-    <div class="join">
-      <input type="text" placeholder="Room Code" name="code" value="{{code}}" />
-      <button type="submit" name="join">Join a Room</button>
-    </div>
-    <button type="submit" name="create" class="create-btn">Create a Room</button>
-    {% if error %}
-    <ul>
-      <li>{{error}}</li>
-    </ul>
-    {% endif %}
-  </form>
+
 {% endblock %}  

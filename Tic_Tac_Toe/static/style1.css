@@ -49,12 +49,18 @@
     box-sizing: border-box;
   }
   
+  @font-face {
+    font-family: 'alo';
+    src: url('/static/MachineGunk.ttf') format('truetype');
+}
+
   html {
     font-size: 10px;
   }
   
   body {
     /* display: flex; */
+    font-family: 'alo', sans-serif;
     align-items: center;
     justify-content: center;
     overflow: hidden;
@@ -66,6 +72,32 @@
     font-size: var(--fontSizeMd);
     line-height: var(--lineHeightMd);
   }
+
+  p {
+    font-size: 20px;
+    position: absolute;
+    top: 5%;
+    display: block;
+    text-align: center;
+}
+
+header {
+  font-size: 100px;
+  position: absolute;
+  top: 15%;
+  display: block;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out; 
+
+}
+
+  .center {
+    position: absolute;
+    top: 85%;
+    text-align: center;
+    width: 500px;
+    height: 50px;
+}
   
   
   .radio-inputs {
@@ -249,7 +281,7 @@ html {
       font-size: 35%; } }
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'alo', sans-serif;
   font-size: 1.4rem;
   font-weight: 500;
   line-height: 1.8rem;
@@ -318,8 +350,10 @@ body {
 .game-start {
   text-align: center;
   max-width: 90%;
-  animation: fadeIn 1s ease-in-out; }
+  animation: fadeIn 1s ease-in-out; 
+}
   .game-start__choices {
+    letter-spacing: 2px;
     margin: 4rem 0;
     background-color: #1f3641;
     padding: 2.4rem;
@@ -360,6 +394,8 @@ body {
     opacity: 0.5; }
 
 .btn {
+  font-family: 'alo', sans-serif;
+  letter-spacing: 2px;
   display: block;
   width: 100%;
   font-size: 2rem;
@@ -596,3 +632,4 @@ body {
   .modal__buttons {
     margin-top: 3rem; }
 
+    

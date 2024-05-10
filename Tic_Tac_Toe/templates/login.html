@@ -5,7 +5,6 @@
     }
     .type{
         display: block;
-        margin-left: 80px;
         margin-top: -15px;
         border: 1px solid black;
     }
@@ -13,13 +12,7 @@
         margin-left: -170px;
         font-weight: bold;
     }
-    .btn{
-        margin-top: 20px;
-        width: 80px;
-        height: 25px;
-        background-color: orangered;
-        color: white;
-    }
+    
 </style>
 <div class="container">
     <h2 class="hi" > Welcome to Login </h2>
@@ -29,15 +22,13 @@
         {% endif %}
         <br>
         <div class="form-group">
-            <label class="label">Username:</label>
              <input class="type" type="text" class="form-control" id="name" name="name" placeholder="Enter name" name="name" value = "{{name}}">
         </div>
         <div class="form-group">
-            <label class="label">Password:</label>
         <input class="type" type="password" class="form-control" id="password" name="password" placeholder="Enter password" name="pswd">
         </div>    
-        <button class="btn" type="submit" class="btn btn-primary">Login</button>
-        <p>Not have account yet? <a href = "{{url_for('register')}}"> Register?</a></p>
+        <button class="btn btn--yellow" type="submit" class="btn btn-primary">Login</button>
+        <p>Not have account yet ? <a href = "{{url_for('register')}}"> Register ?</a></p>
     </form>
 </div>      
 {% endblock %}  
