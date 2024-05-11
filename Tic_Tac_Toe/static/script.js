@@ -184,12 +184,15 @@ function resetBoard(cells) {
 
 // Function to perform AI move
 function performRandomAIMove(cells) {
+    alert(1)
     let boardSize = Math.sqrt(cells.length);
     // Find available empty cells
     const emptyCells = [...cells].filter(gameplay__card => !gameplay__card.textContent);
     const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
     // Change the content of the selected cell to "O"
+    alert(2)
     randomCell.textContent = "O";
+    alert(3)
     randomCell.classList.add('o-mark');
 
     finished = false;

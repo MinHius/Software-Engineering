@@ -348,10 +348,14 @@ def connect(auth):
 def handle_move(data):
     room = session.get("room")
     id = session.get("userid")
-    if data['content'] == "X" and (data['turn'] % 2 == 0) and (id == session.get("userid")): # neu ten trung voi th host thi choi X dc thoi
+    if id in host_join:   # th host nhan
+        join_id = host_join[id]
+        session['host'] = id
+        session['join'] = join_id
+    if data['content'] == "X" and (data['turn'] % 2 == 0) and (id == session.get("host")): # neu ten trung voi th host thi choi X dc thoi
         data['turn'] += 1
         emit('moveMade', data, to= room)   # emit la phat su kien 'move' cho client, gui move cho room
-    elif data['content'] == "O" and (data['turn'] % 2 != 0) and (id == session.get("userid")): # neu ten trung voi th join thi choi O dc thoi
+    elif data['content'] == "O" and (data['turn'] % 2 != 0) and (id == session.get("join")): # neu ten trung voi th join thi choi O dc thoi
         data['turn'] += 1
         emit('moveMade', data, to= room)
     else:
@@ -377,6 +381,8 @@ def disconnect():
 if __name__ == '__main__':
     socketio.run(app, debug = True, allow_unsafe_werkzeug=True)
     
+   
+   
    
    
    
