@@ -42,7 +42,7 @@ def generate_unique_code(length):
 # Route for the menu page
 @app.route("/")
 def menu():
-    return render_template('first_page.html')
+    return render_template('main_pages/first_page.html')
 
 # Route for mode selection page
 @app.route("/mode", methods=['POST'])
@@ -50,8 +50,8 @@ def mode():
     if request.method == "POST":
         mode = request.form.get('mode')  # Get the selected mode
         if mode == "Computer":
-            return render_template('computer_mode.html')    
-    return render_template('login.html') 
+            return render_template('main_pages/computer_mode.html')    
+    return render_template('main_pages/login.html') 
     
     
 
@@ -66,17 +66,17 @@ def size():
         difficulty = request.form.get('difficulty')  # Get the selected mode
         if size_picked == 4:
             if difficulty != 'easy':
-                return render_template('computer_mode.html', error = "Due to computational limits, gameboard larger than 3 will be in easy mode.", size = size_picked)
-            return render_template('4x4.html', difficulty = difficulty)
+                return render_template('main_pages/computer_mode.html', error = "Due to computational limits, gameboards larger than 3 will be in easy mode.", size = size_picked)
+            return render_template('gameboards/4x4.html', difficulty = difficulty)
         if size_picked == 5:
             if difficulty != 'easy':
-                return render_template('computer_mode.html', error = "Due to computational limits, gameboard larger than 3 will be in easy mode.", size = size_picked)
-            return render_template('5x5.html', difficulty = difficulty)
+                return render_template('main_pages/computer_mode.html', error = "Due to computational limits, gameboards larger than 3 will be in easy mode.", size = size_picked)
+            return render_template('gameboards/5x5.html', difficulty = difficulty)
         if size_picked == 6:
             if difficulty != 'easy':
-                return render_template('computer_mode.html', error = "Due to computational limits, gameboard larger than 3 will be in easy mode.", size = size_picked)
-            return render_template('6x6.html', difficulty = difficulty)
-    return render_template('3x3.html', difficulty = difficulty)
+                return render_template('main_pages/computer_mode.html', error = "Due to computational limits, gameboards larger than 3 will be in easy mode.", size = size_picked)
+            return render_template('gameboards/6x6.html', difficulty = difficulty)
+    return render_template('gameboards/3x3.html', difficulty = difficulty)
         
 
 
@@ -99,11 +99,11 @@ def login():
             session['userid'] = user[0]
             session['name'] = user[1]  # chu y cai nay 
             message = 'Logged in successfully !'
-            return render_template('multi.html',
+            return render_template('main_pages/multi.html',
                                    message=message)
         else:
             message = 'Please enter correct username / password !'
-    return render_template('login.html',
+    return render_template('main_pages/login.html',
                            message=message)
 
 # Logout session
@@ -134,10 +134,10 @@ def register():
                 cursor.execute('INSERT INTO accounts (username, password, rankpoint) VALUES (?, ?, 0)', (userName, password,))
                 users.commit()
                 message = 'You have successfully registered !'
-                return render_template('login.html')
+                return render_template('main_pages/login.html')
     elif request.method == 'POST':
         message = 'Please fill out the form !'
-    return render_template('register.html', message=message)
+    return render_template('main_pages/register.html', message=message)
 
 
 @app.route("/multi", methods= ['POST', 'GET'])
@@ -145,12 +145,12 @@ def multi():
     if request.method == "POST":
         mode = request.form.get('mode')
         if mode == "Custom":
-            return render_template('custom.html')
+            return render_template('main_pages/custom.html')
         elif mode == "Normal":
             return redirect(url_for('waiting_normal'))
         else:
             return redirect(url_for('waiting_rank'))
-    return render_template("multi.html")
+    return render_template("main_pages/multi.html")
 
 @app.route("/waiting_normal", methods = ["POST", "GET"])
 def waiting_normal():
@@ -236,13 +236,13 @@ def custom():
         join = request.form.get("join", False)
         create = request.form.get("create", False)
         if join != False and not code:
-            return render_template('custom.html', error = "Please enter a room code!", code = code)
+            return render_template('main_pages/custom.html', error = "Please enter a room code!", code = code)
         room = code
         if create != False:
             room = generate_unique_code(4)  
             rooms[room] = {"members": 0}
         elif code not in rooms:    
-            return render_template('custom.html', error = "Room does not exist!", code = code)
+            return render_template('main_pages/custom.html', error = "Room does not exist!", code = code)
         session["room"] = room
         if create != False:
             session['role'] = "X"
@@ -250,7 +250,7 @@ def custom():
             session['role'] = "O"
         return redirect(url_for("room"))     
               
-    return render_template('custom.html')
+    return render_template('main_pages/custom.html')
 
  
 @socketio.on('x_win')
@@ -314,14 +314,14 @@ def room():
     room = session.get("room")
     if room is None or session.get("name") is None or room not in rooms:
         return redirect(url_for("multi"))
-    return render_template("room.html", room = room, size = 25)
+    return render_template("gameboards/room.html", room = room, size = 25)
 
 @app.route("/room_rank")
 def room_rank():
     room = session.get("room")
     if room is None or session.get("name") is None or room not in rooms:
         return redirect(url_for("multi"))
-    return render_template("room_rank.html", room = room, size = 25)
+    return render_template("gameboards/room_rank.html", room = room, size = 25)
 
 
 @socketio.on("connect")
