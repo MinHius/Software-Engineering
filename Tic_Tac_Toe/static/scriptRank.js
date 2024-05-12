@@ -54,8 +54,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     turn: turn,
                     icon: (turn % 2 === 0) ? 'x-mark' : 'o-mark'
                 }
-
-                
                 socketio.emit('makeMove', data)
             } 
         });

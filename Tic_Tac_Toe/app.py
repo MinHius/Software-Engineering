@@ -24,7 +24,8 @@ rooms = {}
 size_picked = 0
 waiting_player_normal = {}  # dict luu cac player dang tim tran normal
 waiting_player_rank = {}  # dict luu cac player dang tim tran rank
-host_join = {}
+host_join = {}  # luu cac cap session id cua host va join trong rank.
+host_join_normal = {}
 
 def generate_unique_code(length):
     length = int(length)
@@ -99,8 +100,13 @@ def login():
             session['userid'] = user[0]
             session['name'] = user[1]  # chu y cai nay 
             message = 'Logged in successfully !'
+            cursor.execute('SELECT rankpoint FROM accounts WHERE userName = ?', (userName,))   # select diem cua nguoi choi 
+            point = cursor.fetchone()[0]      
+            cursor.execute("SELECT COUNT(*) FROM accounts WHERE rankpoint > ?", (point,))  # dem so nguoi choi hon point nguoi choi bh
+            higher_rank_players = cursor.fetchone()[0]
+            player_rank = higher_rank_players + 1
             return render_template('main_pages/multi.html',
-                                   message=message)
+                                   message=message, player_point = point, userName = userName, player_rank = player_rank)
         else:
             message = 'Please enter correct username / password !'
     return render_template('main_pages/login.html',
@@ -131,7 +137,7 @@ def register():
             elif not userName or not password:
                 message = 'Please fill out the form !'
             else:
-                cursor.execute('INSERT INTO accounts (username, password, rankpoint) VALUES (?, ?, 0)', (userName, password,))
+                cursor.execute('INSERT INTO accounts (username, password, rankpoint) VALUES (?, ?, 1000)', (userName, password,))
                 users.commit()
                 message = 'You have successfully registered !'
                 return render_template('main_pages/login.html')
@@ -141,7 +147,7 @@ def register():
 
 
 @app.route("/multi", methods= ['POST', 'GET'])
-def multi():
+def multi():  
     if request.method == "POST":
         mode = request.form.get('mode')
         if mode == "Custom":
@@ -157,18 +163,22 @@ def waiting_normal():
     playerID = session.get('userid')
     try:
         while True:
-            time.sleep(5)
+            time.sleep(2)
             print(waiting_player_normal)
             if waiting_player_normal and playerID not in waiting_player_normal:
                 opponent_id, room = waiting_player_normal.popitem()    # loi o cai nay
                 print("1111")
                 session["room"] = room    # session cua th join(th tim sau)
+                session['host'] = opponent_id
+                session['join'] = playerID
+                host_join_normal[opponent_id] = playerID
                 return redirect(url_for("room"))
             else:   
                 room = generate_unique_code(4)
                 rooms[room] = {"members": 0}
                 waiting_player_normal[playerID] = room
                 session["room"] = room           # session cua th tao room truoc(find trc)
+                session['host'] = playerID
                 return redirect(url_for("room"))
             
     except Exception as e:
@@ -281,7 +291,6 @@ def x_win():
         users.commit()
 
 
-
 @socketio.on('o_win')
 def o_win():
     id = session.get('userid')
@@ -319,6 +328,7 @@ def room():
 @app.route("/room_rank")
 def room_rank():
     room = session.get("room")
+    name = session.get("name")
     if room is None or session.get("name") is None or room not in rooms:
         return redirect(url_for("multi"))
     return render_template("gameboards/room_rank.html", room = room, size = 25)
@@ -334,7 +344,8 @@ def connect(auth):
     if room not in rooms:
         leave_room(room)
         return
-    
+    print(session.get('host'))
+    print(session.get('join'))
     join_room(room)
     send({"name": name, "message": "has entered the room"}, to = room)
     rooms[room]["members"] += 1
@@ -348,8 +359,14 @@ def connect(auth):
 def handle_move(data):
     room = session.get("room")
     id = session.get("userid")
-    if id in host_join:   # th host nhan
+    if id in host_join:   # th host rank nhan
+        print('55')
         join_id = host_join[id]
+        session['host'] = id
+        session['join'] = join_id
+    if id in host_join_normal: # th host normal nhan
+        print('44')
+        join_id = host_join_normal[id]
         session['host'] = id
         session['join'] = join_id
     if data['content'] == "X" and (data['turn'] % 2 == 0) and (id == session.get("host")): # neu ten trung voi th host thi choi X dc thoi
@@ -366,13 +383,25 @@ def handle_move(data):
 def disconnect():
     room = session.get("room")
     name = session.get("name")
+    id = session.get('userid')
     leave_room(room)
     
     if room in rooms:
         rooms[room]["members"] -= 1
         if rooms[room]["members"] <= 0:
             del rooms[room]
-    
+    print(host_join)
+    print(host_join_normal)
+    if id in host_join:  # id la thang host
+        host_join.pop(id)
+    else:   # id la thang join
+        host_id = session.get('host')
+        host_join.pop(host_id, None)
+    if id in host_join_normal:  # id la thang host
+        host_join_normal.pop(id)
+    else:   # id la thang join
+        host_id = session.get('host')
+        host_join_normal.pop(host_id, None)
     send({"name": name, "message": "has left the room"}, to = room)
     print(f"{name} left room {room}")
  
