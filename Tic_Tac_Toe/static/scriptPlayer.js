@@ -69,46 +69,45 @@ function checkState(cells) {
 
 // Function to check the diagonal for a winner
 function checkDiag(cells, boardSize) {
-    // Check the main diagonal
-    let j1 = 0;
-    let j2 = 0;
-    for (let i = 0; i < boardSize - 1; i++) {
-        if (cells[i * boardSize + i].textContent === cells[(i + 1) * (boardSize + 1)].textContent && cells[i * boardSize + i].textContent === "X" && cells[(i + 1) * (boardSize + 1)].textContent === "X") {
-            j1++;
+    // Check diagonal
+    let n = boardSize
+    for(let i = 0; i < n - 4; i++) {
+        for(let j = 0; j < n - 4; j++) {
+            if (cells[i * n + j].textContent === cells[(i + 1) * n + (j + 1)].textContent && cells[(i + 2) * n + (j + 2)].textContent === cells[(i + 3) * n + (j + 3)].textContent && cells[(i + 4) * n + (j + 4)].textContent === cells[i * n + j].textContent && cells[i * n + j].textContent === 'X')
+                return -1;
+            else {
+                continue;
+            }
         }
     }
-    if (j1 + 1 === 5) {
-        return -1;
-    }
-
-    for (let i = 0; i < boardSize - 1; i++) {
-        if (cells[i * boardSize + i].textContent === cells[(i + 1) * (boardSize + 1)].textContent && cells[i * boardSize + i].textContent === "O" && cells[(i + 1) * (boardSize + 1)].textContent === "O") {
-            j2++;
+    for(let i = 0; i < n - 4; i++) {
+        for(let j = 0; j < n - 4; j++) {
+            if (cells[i * n + j].textContent === cells[(i + 1) * n + (j + 1)].textContent && cells[(i + 2) * n + (j + 2)].textContent === cells[(i + 3) * n + (j + 3)].textContent && cells[(i + 4) * n + (j + 4)].textContent === cells[i * n + j].textContent && cells[i * n + j].textContent === 'O')
+                return 1;
+            else {
+                continue;
+            }
         }
     }
-    if (j2 + 1 === 5) {
-        return 1;
-    }
-    // Check the secondary diagonal
-    k1 = 0
-    k2 = 0
-    for (let i = 0; i < boardSize - 1; i++) {
-        if (cells[(i + 1) * (boardSize - 1)].textContent === cells[(i + 2) * (boardSize - 1)].textContent && cells[(i + 1) * (boardSize - 1)].textContent === "X" && cells[(i + 2) * (boardSize - 1)].textContent === "X") {
-            k1++;
+    for(let i = 0; i < n - 4; i++) {
+        for(let j = 4; j < n; j++) {
+            if (cells[i * n + j].textContent === cells[(i + 1) * n + (j - 1)].textContent && cells[(i + 2) * n + (j - 2)].textContent === cells[(i + 3) * n + (j - 3)].textContent && cells[(i + 4) * n + (j - 4)].textContent === cells[i * n + j].textContent && cells[i * n + j].textContent === 'X')
+                return -1;
+            else {
+                continue;
+            }
         }
     }
-    if (k1 + 1 === 5) {
-        return -1;
-    }
-    for (let i = 0; i < boardSize - 1; i++) {
-        if (cells[(i + 1) * (boardSize - 1)].textContent === cells[(i + 2) * (boardSize - 1)].textContent && cells[(i + 1) * (boardSize - 1)].textContent === "O" && cells[(i + 2) * (boardSize - 1)].textContent === "O") {
-            k2++;
+    for(let i = 0; i < n - 4; i++) {
+        for(let j = 4; j < n; j++) {
+            if (cells[i * n + j].textContent === cells[(i + 1) * n + (j - 1)].textContent && cells[(i + 2) * n + (j - 2)].textContent === cells[(i + 3) * n + (j - 3)].textContent && cells[(i + 4) * n + (j - 4)].textContent === cells[i * n + j].textContent && cells[i * n + j].textContent === 'O')
+                return 1;
+            else {
+                continue;
+            }
         }
     }
-    if (k2 + 1 === 5) {
-        return 1;
-    }
-    return checkCol(cells, boardSize);
+    return checkCol(cells, n)
 }
 
 // Function to check columns for a winner
