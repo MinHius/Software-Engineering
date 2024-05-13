@@ -4,7 +4,11 @@ document.addEventListener("DOMContentLoaded", function() {
     var socketio = io()  // coi nhu la connect socket
     const cells = document.querySelectorAll('.gameplay__card');
     let finished = true
-
+    socketio.on('update_info', function(data) {
+        document.getElementById('hostName').innerHTML = data.host_name
+        document.getElementById('joinName').innerHTML = data.join_name
+        console.log("ok")
+    })
     socketio.on('moveMade', function(data) {
         const position = data.position
         const content = data.content

@@ -1,10 +1,8 @@
-from flask import Flask, redirect, render_template, request, session, url_for, current_app
+from flask import Flask, redirect, render_template, request, session, url_for
 from flask_socketio import SocketIO, join_room, leave_room, emit, send
 import random
 from string import ascii_uppercase
 from flask_mysqldb import MySQL
-import MySQLdb.cursors
-import re
 import time
 import sqlite3
 
@@ -26,7 +24,6 @@ waiting_player_normal = {}  # dict luu cac player dang tim tran normal
 waiting_player_rank = {}  # dict luu cac player dang tim tran rank
 host_join = {}  # luu cac cap session id cua host va join trong rank.
 host_join_normal = {}
-
 def generate_unique_code(length):
     length = int(length)
     while True:
@@ -161,6 +158,7 @@ def multi():
 @app.route("/waiting_normal", methods = ["POST", "GET"])
 def waiting_normal():
     playerID = session.get('userid')
+    playerName = session.get('name')
     try:
         while True:
             time.sleep(2)
@@ -170,7 +168,11 @@ def waiting_normal():
                 print("1111")
                 session["room"] = room    # session cua th join(th tim sau)
                 session['host'] = opponent_id
-                session['join'] = playerID
+                session['join'] = playerID 
+                with sqlite3.connect("database.db") as users:
+                    cursor = users.cursor()
+                    cursor.execute("SELECT username FROM accounts WHERE id = ?", (opponent_id,))
+                    session['hostName'] = cursor.fetchone()[0]
                 host_join_normal[opponent_id] = playerID
                 return redirect(url_for("room"))
             else:   
@@ -179,6 +181,7 @@ def waiting_normal():
                 waiting_player_normal[playerID] = room
                 session["room"] = room           # session cua th tao room truoc(find trc)
                 session['host'] = playerID
+                session['hostName'] = playerName
                 return redirect(url_for("room"))
             
     except Exception as e:
@@ -187,6 +190,7 @@ def waiting_normal():
 @app.route("/waiting_rank", methods = ["POST", "GET"])
 def waiting_rank():
     playerID = session.get('userid')
+    playerName = session.get('name')
     print(playerID)
     
     # tim trong database thang nao thoa man dieu kien 
@@ -208,7 +212,8 @@ def waiting_rank():
                 check = False
                 for opponent in opponents:    # xet tung thang player co range diem phu hop xem co dang find ko
                     opponent_id = opponent[0]
-                    time.sleep(5)
+                    opponent_name = opponent[1]
+                    time.sleep(2)
                     print(waiting_player_rank)
                     # co th find va th oppo_id dang xet lai thuoc hang cho.
                     if waiting_player_rank and opponent_id in waiting_player_rank:
@@ -217,7 +222,8 @@ def waiting_rank():
                         session["room"] = room    # session cua th join(th tim sau)
                         session['join'] = playerID
                         session['host'] = opponent_id
-                        host_join[opponent_id] = playerID
+                        host_join[opponent_id] = playerID 
+                        session['hostName'] = opponent_name
                         return redirect(url_for("room_rank"))
                     # co thang dang find nma (th oppo_id ko nam trong hang cho) or (th oppo_id la thang thuoc range nhung th find thi out range) 
                     elif waiting_player_rank and opponent_id not in waiting_player_rank:  
@@ -228,12 +234,16 @@ def waiting_rank():
                         rooms[room] = {"members": 0}
                         waiting_player_rank[playerID] = room
                         session["room"] = room           # session cua th tao room truoc(find trc)
+                        session['host'] = playerID
+                        session['hostName'] = playerName
                         return redirect(url_for("room_rank"))
                 if not check:   # find xong het 1 luot roi nma ko thay ai thoa man dieu kien (kp la ko ai find ma la ko tim dc ai thoa man dieu kien)
                     room = generate_unique_code(4)
                     rooms[room] = {"members": 0}
                     waiting_player_rank[playerID] = room
                     session["room"] = room           # session cua th tao room truoc(find trc)
+                    session['host'] = playerID
+                    session['hostName'] = playerName
                     return redirect(url_for("room_rank"))
                 
         except Exception as e:
@@ -241,6 +251,8 @@ def waiting_rank():
     
 @app.route("/custom", methods = ['POST', 'GET'])
 def custom():
+    playerName = session.get('name')
+    playerID = session.get('userid')
     if request.method == 'POST':
         code = request.form.get("code")
         join = request.form.get("join", False)
@@ -256,8 +268,12 @@ def custom():
         session["room"] = room
         if create != False:
             session['role'] = "X"
+            session['host'] = playerID
+            session['join'] = None
         else:
             session['role'] = "O"
+            session['host'] = None
+            session['join'] = playerID
         return redirect(url_for("room"))     
               
     return render_template('main_pages/custom.html')
@@ -328,7 +344,6 @@ def room():
 @app.route("/room_rank")
 def room_rank():
     room = session.get("room")
-    name = session.get("name")
     if room is None or session.get("name") is None or room not in rooms:
         return redirect(url_for("multi"))
     return render_template("gameboards/room_rank.html", room = room, size = 25)
@@ -344,15 +359,20 @@ def connect(auth):
     if room not in rooms:
         leave_room(room)
         return
-    print(session.get('host'))
-    print(session.get('join'))
     join_room(room)
     send({"name": name, "message": "has entered the room"}, to = room)
     rooms[room]["members"] += 1
     if rooms[room]["members"] == 1:
         session['host'] = id
-    elif rooms[room]["members"] == 2:
+        print("s")
+    elif rooms[room]["members"] == 2: 
         session['join'] = id
+        print("d")
+        host_name = session.get('hostName') 
+        print("da gui")
+        emit('update_info', {'host_name' : host_name, 'join_name' : name}, to = room)
+    print(f"so nguoi trong room {rooms[room]["members"]} ten la {name}")
+    print(rooms)
     print(f"{name} joined room {room}")
     
 @socketio.on('makeMove')
@@ -392,16 +412,15 @@ def disconnect():
             del rooms[room]
     print(host_join)
     print(host_join_normal)
-    if id in host_join:  # id la thang host
+    if id in host_join:  # id la thang host rank
         host_join.pop(id)
-    else:   # id la thang join
-        host_id = session.get('host')
+    else:   # id la thang join rank
+        host_id = session.get('host') 
         host_join.pop(host_id, None)
     if id in host_join_normal:  # id la thang host
         host_join_normal.pop(id)
     else:   # id la thang join
         host_id = session.get('host')
-        host_join_normal.pop(host_id, None)
     send({"name": name, "message": "has left the room"}, to = room)
     print(f"{name} left room {room}")
  
