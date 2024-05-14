@@ -22,7 +22,7 @@ waiting_player_normal = {}  # dict luu cac player dang tim tran normal
 waiting_player_rank = {}  # dict luu cac player dang tim tran rank
 host_join = {}  # luu cac cap session id cua host va join trong rank.
 host_join_normal = {}
-waiting_player_custom = {}
+waiting_player_custom = {}   # hang cho custom
 
 def generate_unique_code(length):
     length = int(length)
