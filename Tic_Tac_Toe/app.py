@@ -2,7 +2,6 @@ from flask import Flask, redirect, render_template, request, session, url_for
 from flask_socketio import SocketIO, join_room, leave_room, emit, send
 import random
 from string import ascii_uppercase
-from flask_mysqldb import MySQL
 import time
 import sqlite3
 
@@ -15,6 +14,10 @@ connect = sqlite3.connect('database.db')
 connect.execute( 
     'CREATE TABLE IF NOT EXISTS accounts(id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(50) NOT NULL, password VARCHAR(255) NOT NULL, rankpoint INTEGER NOT NULL)')
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 35ef0d12e10f6ae0c8c2ea8073a513248165c459
 # Dictionary to store game state for each room
 rooms = {}
 size_picked = 0
@@ -377,7 +380,7 @@ def connect(auth):
         host_name = session.get('hostName') 
         print("da gui")
         emit('update_info', {'host_name' : host_name, 'join_name' : name}, to = room)
-    print(f"so nguoi trong room {rooms[room]["members"]} ten la {name}")
+
     print(rooms)
     print(f"{name} joined room {room}")
     

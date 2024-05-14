@@ -632,4 +632,18 @@ body {
   .modal__buttons {
     margin-top: 3rem; }
 
+
+.player-names {
+  margin-bottom: 20px; /* Adjust this value as needed */
+  margin-left: 20px; /* Adjust left spacing as needed */
+  margin-right: 20px; /* Adjust right spacing as needed */
+}
+
+.player-names h1 {
+  display: inline-block;
+  margin-bottom: 10px; /* Adjust vertical spacing between name and role */
+}
+
+
+
     
