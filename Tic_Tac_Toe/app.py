@@ -14,7 +14,6 @@ connect = sqlite3.connect('database.db')
 connect.execute( 
     'CREATE TABLE IF NOT EXISTS accounts(id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(50) NOT NULL, password VARCHAR(255) NOT NULL, rankpoint INTEGER NOT NULL)')
 
-
 # Dictionary to store game state for each room
 rooms = {}
 size_picked = 0
@@ -22,6 +21,8 @@ waiting_player_normal = {}  # dict luu cac player dang tim tran normal
 waiting_player_rank = {}  # dict luu cac player dang tim tran rank
 host_join = {}  # luu cac cap session id cua host va join trong rank.
 host_join_normal = {}
+waiting_player_custom = {}   # hang cho custom
+
 def generate_unique_code(length):
     length = int(length)
     while True:
@@ -249,7 +250,6 @@ def waiting_rank():
     
 @app.route("/custom", methods = ['POST', 'GET'])
 def custom():
-    playerName = session.get('name')
     playerID = session.get('userid')
     if request.method == 'POST':
         code = request.form.get("code")
@@ -268,10 +268,17 @@ def custom():
             session['role'] = "X"
             session['host'] = playerID
             session['join'] = None
+            waiting_player_custom[playerID] = room
         else:
             session['role'] = "O"
             session['host'] = None
             session['join'] = playerID
+            opponent_id, room = waiting_player_custom.popitem()
+            with sqlite3.connect("database.db") as users:
+                cursor = users.cursor()
+                cursor.execute("SELECT username FROM accounts WHERE id = ?", (opponent_id,))
+                host_name = cursor.fetchone()[0]
+                session['hostName'] = host_name
         return redirect(url_for("room"))     
               
     return render_template('main_pages/custom.html')
