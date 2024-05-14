@@ -18,49 +18,56 @@
         <p><h1>Name: </h1><h1 id="hostName"> </h1></p>
         <h2>Role: X</h2>
     </div>
+    <audio id="myAudio" src="static/bgm_fr.mp3" autoplay loop></audio>
     <div id="gameplay-6x6board" class="gameplay__6x6board">
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
-        <div class="gameplay__card"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
+        <div class="gameplay__card" onclick="playClickSound()"></div>
     </div>
     <div class="player-names">
         <p><h1>Name: </h1><h1 id="joinName"> </h1></p>
         <h2>Role: O</h2>
     </div>
-    <script src="/static/scriptRank.js"> 
+    
+    <script>
+        var difficulty = "{{ difficulty }}";
     </script>
+
+    <button id="muteButton" style="align-items: center;">Mute BGM</button>
+    <script src="/static/sfx.js"></script>
+    <script src="/static/scriptRank.js"></script>
 </body>
 </html>
