@@ -150,9 +150,19 @@ def multi():
             return render_template('main_pages/custom.html')
         elif mode == "Normal":
             return redirect(url_for('waiting_normal'))
+        elif mode == 'LeaderBoard':
+            return redirect(url_for('leaderboard'))
         else:
             return redirect(url_for('waiting_rank'))
     return render_template("main_pages/multi.html")
+
+@app.route('/leaderboard')
+def leaderboard():
+    with sqlite3.connect("database.db") as users:
+        cursor = users.cursor()
+        cursor.execute("SELECT username, rankpoint FROM accounts ORDER BY rankpoint DESC")
+        leaderboard_data = cursor.fetchall()  # dạng tuple, gồm các list chứa username và rankpoint tương ứng
+        return render_template('main_pages/leaderboard.html', leaderboard_data = leaderboard_data)
 
 @app.route("/waiting_normal", methods = ["POST", "GET"])
 def waiting_normal():
@@ -369,13 +379,16 @@ def connect(auth):
     rooms[room]["members"] += 1
     if rooms[room]["members"] == 1:
         session['host'] = id
-        print("s")
     elif rooms[room]["members"] == 2: 
         session['join'] = id
-        print("d")
-        host_name = session.get('hostName') 
-        print("da gui")
-        emit('update_info', {'host_name' : host_name, 'join_name' : name}, to = room)
+        host_name = session.get('hostName')  
+        with sqlite3.connect("database.db") as users:
+            cursor = users.cursor()
+            cursor.execute("SELECT rankpoint FROM accounts WHERE username = ?", (host_name,))
+            host_point = cursor.fetchone()[0]
+            cursor.execute("SELECT rankpoint FROM accounts WHERE username = ?", (name,))
+            join_point = cursor.fetchone()[0]
+        emit('update_info', {'host_name' : host_name, 'join_name' : name, 'host_point' : host_point, 'join_point' : join_point}, to = room)
 
     print(rooms)
     print(f"{name} joined room {room}")

@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", function() {
     socketio.on('update_info', function(data) {
         document.getElementById('hostName').innerHTML = data.host_name
         document.getElementById('joinName').innerHTML = data.join_name
+        document.getElementById('host_point').innerHTML = data.host_point
+        document.getElementById('join_point').innerHTML = data.join_point
         console.log("ok")
     })
     socketio.on('moveMade', function(data) {
