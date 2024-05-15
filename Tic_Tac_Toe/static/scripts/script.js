@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const cells = document.querySelectorAll('.gameplay__card');
-    turn = 0
+    turn = 1
     let finished = true
     change = 1;
 

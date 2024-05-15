@@ -16,30 +16,31 @@
 </style>
 </head>
 <body>
+  <button class="back-button" onclick="window.history.back()" style="position: absolute; top: 20px; left: 20px;">Back</button>
   <form action="/customize" method="post">
-    <audio id="myAudio" src="static/bgm.mp3" autoplay loop></audio>
+    <audio id="myAudio" src="static/mp3/bgm.mp3" autoplay loop></audio>
     <img src="static/svg/logo.svg">
     <div class="game-start__choices">
       <h2 class="heading-xs">Select Size</h2>
       <div class="radio-container">
         <div class="radio-inputs">
           <label class="radio">
-            <input type="radio" name="size" value="3" checked="">
+            <input type="radio" name="size" value="3" onclick="playClickSound()" checked="">
             <span class="name">3x3</span>
           </label>
   
           <label class="radio">
-            <input type="radio" name="size" value="4">
+            <input type="radio" name="size" value="4" onclick="playClickSound()">
             <span class="name">4x4</span>
           </label>
           
           <label class="radio">
-            <input type="radio" name="size" value="5">
+            <input type="radio" name="size" value="5" onclick="playClickSound()">
             <span class="name">5x5</span>
           </label>
   
           <label class="radio">
-            <input type="radio" name="size" value="6">
+            <input type="radio" name="size" value="6" onclick="playClickSound()">
             <span class="name">6x6</span>
           </label>
         </div>
@@ -52,12 +53,12 @@
       <div class="radio-container">
         <div class="radio-inputs">
           <label class="radio">
-            <input type="radio" name="difficulty" value="easy" checked="">
+            <input type="radio" name="difficulty" value="easy" onclick="playClickSound()" checked="">
             <span class="name">Easy</span>
           </label>
           
           <label class="radio">
-            <input type="radio" name="difficulty" value="hard">
+            <input type="radio" name="difficulty" value="hard" onclick="playClickSound()">
             <span class="name">Hard</span>
           </label>
         </div>
@@ -65,7 +66,7 @@
     </div>
 
     <div class="game-start__buttons">
-      <button type="submit" name="START" class="btn btn--yellow">START</button>
+      <button type="submit" name="START" class="btn btn--yellow" onclick="playClickSound()">START</button>
     </div>
 
 
@@ -73,5 +74,6 @@
   <div class="center">
   <p>{{ error }}</p>
   </div>
+  <script src="/static/scripts/sfx.js"></script>
 </body>
 </html>

@@ -10,7 +10,9 @@
     />
 </head>
 <body>
-    <audio id="myAudio" src="static/bgm.mp3" autoplay loop></audio>
+    <button class="back-button" onclick="window.history.back()" style="position: absolute; top: 20px; left: 20px;">Back</button>
+    <button class="mute-button" id="muteButton" style="align-items: center;" onclick="playClickSound()">Mute BGM</button>
+    <audio id="myAudio" src="static/mp3/bgm.mp3" autoplay loop></audio>
     <div id="gameplay-6x6board" class="gameplay__6x6board">
         <div class="gameplay__card" onclick="playClickSound()"></div>
         <div class="gameplay__card" onclick="playClickSound()"></div>
@@ -49,12 +51,12 @@
         <div class="gameplay__card" onclick="playClickSound()"></div>
         <div class="gameplay__card" onclick="playClickSound()"></div>
     </div>
-    <button id="muteButton" style="align-items: center;">Mute BGM</button>
+
 
     <script>
         var difficulty = "{{ difficulty }}";
     </script>
-    <script src="/static/sfx.js"></script>
-    <script src="/static/script.js"></script>
+    <script src="/static/scripts/sfx.js"></script>
+    <script src="/static/scripts/script.js"></script>
 </body>
 </html>

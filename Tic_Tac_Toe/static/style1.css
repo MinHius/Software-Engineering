@@ -444,6 +444,7 @@ body {
     .btn--silver:hover {
       background-color: #dbe8ed; }
 
+
 .gameplay {
   display: grid;
   margin: 5rem 0;
@@ -645,5 +646,56 @@ body {
 }
 
 
+
+/* Specific styling for the back button */
+.back-button {
+  font-family: 'alo', sans-serif;
+  letter-spacing: 5px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #f2b137; /* Change this to your desired color */
+  color: #000;
+  border: 1px solid #ccc;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a2a33;
+  text-transform: uppercase;
+  line-height: 2.5rem;
+  text-align: center;
+  border: none;
+  border-radius: 1.5rem;
+  transition: all 0.4s ease; 
+}
+
+.back-button:hover {
+  background-color: #e0e0e0; /* Change this to your desired hover color */
+}
+
+
+/* Specific styling for the back button */
+.mute-button {
+  font-family: 'alo', sans-serif;
+  letter-spacing: 5px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #f2b137; /* Change this to your desired color */
+  color: #000;
+  border: 1px solid #ccc;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a2a33;
+  text-transform: uppercase;
+  line-height: 2.5rem;
+  text-align: center;
+  border: none;
+  border-radius: 1.5rem;
+  transition: all 0.4s ease; 
+}
+
+.mute-button:hover {
+  background-color: #e0e0e0; /* Change this to your desired hover color */
+}
 
     

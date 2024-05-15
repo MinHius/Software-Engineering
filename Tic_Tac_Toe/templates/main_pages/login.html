@@ -14,6 +14,7 @@
     }
     
 </style>
+<button class="back-button" onclick="window.history.back()" style="position: absolute; top: 20px; left: 20px;">Back</button>
 <div class="container">
     <h2 class="hi" > Welcome to Tic Tac Toe PvP </h2>
     <form action="{{ url_for('login') }}" method="post" class = 'buttons'>
@@ -22,12 +23,12 @@
         {% endif %}
         <br>
         <div class="form-group">
-             <input class="type" type="text" class="form-control" id="name" name="name" placeholder="Enter name" name="name" value = "{{name}}">
+             <input class="type" type="text" class="form-control" id="name" name="name" placeholder="Enter name" name="name" value = "{{name}}" onclick="playClickSound()">
         </div>
         <div class="form-group">
-        <input class="type" type="password" class="form-control" id="password" name="password" placeholder="Enter password" name="pswd">
+        <input class="type" type="password" class="form-control" id="password" name="password" placeholder="Enter password" name="pswd" onclick="playClickSound()">
         </div>    
-        <button class="btn btn--yellow" type="submit" class="btn btn-primary">Login</button>
+        <button class="btn btn--yellow" type="submit" class="btn btn-primary" onclick="playClickSound()">Login</button>
         <p>Not registered yet ? <a href = "{{url_for('register')}}"> Click here.</a></p>
     </form>
 </div>      

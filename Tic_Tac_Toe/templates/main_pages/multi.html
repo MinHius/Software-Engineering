@@ -1,16 +1,25 @@
-{% extends 'base.html' %} {% block content %}
-<form action="/multi" method = "post">
-    <img src="static/svg/logo.svg" style = "margin-bottom: 20px">
-    <button class="btn btn--yellow" type ="submit" name ="mode" value="Normal">Normal</button>
-    <br>
-    <button class="btn btn--blue" type ="submit" name ="mode" value="Competitive">Competitive</button>
-    <br>
-    <button class="btn btn--silver" type="submit" name = "mode" value="Custom">Custom</button>
-    <br>
-    <button class="btn btn--green" type="submit" name = "mode" value="LeaderBoard">LeaderBoard</button>
-</form>
-    <h1>Player: {{userName}}</h1>
-    <h1>Your points: {{player_point}}</h1>
-    <h1>Rank: #{{player_rank}}</h1>
+{% extends 'base.html' %}{% block content %}
 
-{% endblock %}  
+<!-- Back Button -->
+<button class="back-button" onclick="window.history.back()" style="position: absolute; top: 20px; left: 20px;">Back</button>
+
+<form action="/multi" method="post">
+    <img src="static/svg/logo.svg" style="margin-bottom: 20px">
+    <button class="btn btn--yellow" type="submit" name="mode" value="Normal" onclick="playClickSound()">Normal</button>
+    <br>
+    <button class="btn btn--blue" type="submit" name="mode" value="Competitive" onclick="playClickSound()">Competitive</button>
+    <br>
+    <button class="btn btn--silver" type="submit" name="mode" value="Custom" onclick="playClickSound()">Custom</button>
+    <br>
+    <button class="btn btn--green" type="submit" name="mode" value="LeaderBoard" onclick="playClickSound()">LeaderBoard</button>
+    <br>
+</form>
+
+<h1>Player: {{userName}}</h1>
+<h1>Your points: {{player_point}}</h1>
+<h1>Rank: #{{player_rank}}</h1>
+
+
+
+<script src="/static/scripts/sfx.js"></script>
+{% endblock %}
