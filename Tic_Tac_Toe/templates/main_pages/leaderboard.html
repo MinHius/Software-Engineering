@@ -1,22 +1,36 @@
 {% extends 'base.html' %} {% block content %}
 <button class="back-button" onclick="window.history.back()" style="position: absolute; top: 20px; left: 20px;">Back</button>
-<h1>Leaderboard</h1>
+
+<div class="leaderboard-container">
+    <div style="
+    position: absolute;
+    top: -30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px; /* Adjust width as needed */
+">
+<img src="static/svg/logo.svg">
+</div>
 <table>
     <thead>
         <tr>
-            <th>Rank</th>
-            <th>Username</th>
-            <th>Points</th>
+            <th class="thead">Rank</th>
+            <th class="thead">Username</th>
+            <th class="thead">Points</th>
         </tr>
     </thead>
     <tbody>
-        {% for username, rankpoint in leaderboard_data %}
-        <tr>
-            <td>{{ loop.index }}</td>
-            <td>{{ username }}</td>
-            <td>{{ rankpoint }}</td>
+        {% for username, rankpoint in leaderboard_data[:10] %}
+        <tr class="row">
+            <td class="thead" style="text-align: center;">{{ loop.index }}</td>
+            <td class="thead">{{ username }}</td>
+            <td class="thead" style="text-align: center;">{{ rankpoint }}</td>
         </tr>
         {% endfor %}
+        
     </tbody>
+    
 </table>
+
+</div>
 {% endblock %}  

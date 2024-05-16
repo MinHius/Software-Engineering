@@ -221,3 +221,44 @@ input:-webkit-autofill::first-line { font-size: 16px; }
 .back-button:hover {
     background-color: #e0e0e0; /* Change this to your desired hover color */
 }
+
+.leaderboard-container {
+    margin-top: 120px;
+    background-color: #1a2d44;
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 0 10px #48b2efaa;
+    border: 5px solid;
+    border-image-source: linear-gradient(to right, #65e9e4, #4f84f4, #4f84f4, #65e9e4);
+    border-image-slice: 1;
+
+}
+
+.leaderboard-container::before {
+    content: 'LEADERBOARD';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1a2d44;
+    box-shadow: 0 0 10px #48b2efaa;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    border: 3px solid;
+    border-image-source: linear-gradient(to right, #65e9e4, #4f84f4);
+    border-image-slice: 1;
+}
+
+.thead {
+    padding-top: 20px   ;
+    padding-left: 20px;
+    padding-right: 20px;
+    letter-spacing: 2px;
+}
+
+.row {
+    border-bottom:2px solid #65e9e4;
+    margin-bottom: 10px;
+}
