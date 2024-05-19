@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 
-<button class="back-button" onclick="window.history.back()" style="position: absolute; top: 20px; left: 20px;">Back</button>
+<button class="back-button" onclick="handleBackButtonClick()" style="position: absolute; top: 20px; left: 20px;">Back</button>
 <div class="container">
     <h2 class="hi" style="color:#f2b137"> Welcome to Register  </h2>
     <form action="{{ url_for('register') }}" method="post" class = 'buttons'>

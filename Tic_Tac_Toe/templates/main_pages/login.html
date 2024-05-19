@@ -14,7 +14,7 @@
     }
     
 </style>
-<button class="back-button" onclick="window.history.back()" style="position: absolute; top: 20px; left: 20px;">Back</button>
+<button class="back-button" onclick="handleBackButtonClick()" style="position: absolute; top: 20px; left: 20px;">Back</button>
 <div class="container">
     <h2 class="hi" > Welcome to Tic Tac Toe PvP </h2>
     <form action="{{ url_for('login') }}" method="post" class = 'buttons'>
