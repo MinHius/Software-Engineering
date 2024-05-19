@@ -5,7 +5,7 @@
     <h2 class="hi" style="color:#f2b137"> Welcome to Register  </h2>
     <form action="{{ url_for('register') }}" method="post" class = 'buttons'>
         {% if message is defined and message %}
-            <div class="alert alert-warning">  <strong>  {{ message }} ???? </strong></div>
+            <div class="alert alert-warning">  <strong>  {{ message }} !!! </strong></div>
         {% endif %}
         <br>
         <div class="form-group">
@@ -15,7 +15,7 @@
         <input class="type" type="password" class="form-control" id="password" name="password" placeholder="Enter password" name="pswd" onclick="playClickSound()">
         </div>    
         <button class="btn btn--yellow" type="submit" class="btn btn-primary" onclick="playClickSound()">Register</button>
-        <p class="bottom" style="color:#f2b137">Already have an account?  <a class="bottom" href="{{url_for('login')}}" style="color:rgb(163, 165, 163)"> Login here</a></p>
+        <p class="bottom" style="color:#f2b137">Already have an account?  <a class="bottom" href="{{url_for('login')}}" style="color:rgb(163, 165, 163)" onclick="playClickSound()"> Login here.</a></p>
     </form>
 </div> 
 {% endblock %}         

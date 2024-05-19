@@ -19,7 +19,7 @@
     <h2 class="hi" > Welcome to Tic Tac Toe PvP </h2>
     <form action="{{ url_for('login') }}" method="post" class = 'buttons'>
         {% if message is defined and message %}
-            <div class="alert alert-warning">  <strong>  {{ message }} ???? </strong></div>
+            <div class="alert alert-warning">  <strong>  {{ message }} !!! </strong></div>
         {% endif %}
         <br>
         <div class="form-group">
@@ -29,7 +29,7 @@
         <input class="type" type="password" class="form-control" id="password" name="password" placeholder="Enter password" name="pswd" onclick="playClickSound()">
         </div>    
         <button class="btn btn--yellow" type="submit" class="btn btn-primary" onclick="playClickSound()">Login</button>
-        <p style="color:#f2b137">Not registered yet ? <a href = "{{url_for('register')}}" style="color:rgb(163, 165, 163)"> Click here.</a></p>
+        <p class="bottom" style="color:#f2b137">Not registered yet ? <a class="bottom" href = "{{url_for('register')}}" style="color:rgb(163, 165, 163)" onclick="playClickSound()"> Register here.</a></p>
     </form>
 </div>      
 {% endblock %}  

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}{% block content %}
 
 <!-- Back Button -->
-<button class="back-button" onclick="window.history.back()" style="position: absolute; top: 20px; left: 20px;">Back</button>
+<button class="back-button" onclick="handleBackButtonClick()" style="position: absolute; top: 20px; left: 20px;">Back</button>
 
 <form action="/multi" method="post">
     <img src="static/svg/logo.svg" style="margin-bottom: 20px">
