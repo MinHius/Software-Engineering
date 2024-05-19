@@ -15,8 +15,9 @@
 
 # Webgame Tic Tac Toe.
 - Bao gồm nhiều chế độ chơi: Đấu thường tạo phòng, đấu thường ngẫu nhiên hoặc đấu rank với người (Friend), và đấu với máy (Computer).
-- Trong chế độ rank, bảng chơi sẽ là 6x6, chơi đến khi có 5 ký tự giống nhau liên tiếp.
+- Trong chế độ rank, bảng chơi sẽ là 6x6, chơi đến khi có 5 ký tự giống nhau liên tiếp. Thắng sẽ được cộng điểm, thua sẽ mất điểm.
 - Việc tìm kiếm đối thủ là ngẫu nhiên trong chế độ Normal, chế độ Rank sẽ tìm người cùng thứ hạng trên BXH (điểm chênh không quá 1000).
+- Có bảng xếp hạng chung.
 
 # Cách chạy phần mềm.
 1. Tải Git Bash.
