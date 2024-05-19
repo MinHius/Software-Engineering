@@ -11,9 +11,12 @@ Game Tic Tac Toe.
 * Các player có rank, vị trí trên BXH.
 * Việc tìm kiếm đối thủ là ngẫu nhiên, xếp cùng với những người cùng range điểm.
 
-# Ngôn ngữ sử dụng.
-* Python, HTML, CSS
-* Framework: Flask, websocket
+# Thông tin liên quan.
+* Dự án: Web Tic Tac Toe.
+* Ngôn ngữ lập trình đã sử dụng: Python, HTML, CSS, Javascript.
+* Framework: Flask.
+* Database: SQLite.
+* Giao thức mạng: Websocket.
 
 # Cách chạy phần mềm.
 1. Tải Git Bash
