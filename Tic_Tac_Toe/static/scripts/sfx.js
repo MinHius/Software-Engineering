@@ -1,5 +1,6 @@
 const bgmAudio = document.getElementById("myAudio"); // Assuming the audio element ID is "myAudio"
 const clickSound = new Audio("/static/mp3/click.wav"); // Replace with your sound file path
+const backButton = document.getElementById("back-button"); 
 
 const muteButton = document.getElementById("muteButton");
 
@@ -22,6 +23,13 @@ function playClickSound() {
   } else {
     console.error("Click sound element not found!");
   }
+}
+
+function handleBackButtonClick() {
+  playClickSound();
+  setTimeout(() => {
+    window.history.back();
+}, 300);
 }
 
 

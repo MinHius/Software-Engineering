@@ -10,7 +10,7 @@
     />
 </head>
 <body>
-    <button class="back-button" onclick="window.history.back()" style="position: absolute; top: 20px; left: 20px;">Back</button>
+    <button class="back-button" onclick="handleBackButtonClick()" style="position: absolute; top: 20px; left: 20px;">Back</button>
     <button class="mute-button" id="muteButton" style="align-items: center;" onclick="playClickSound()">Mute BGM</button>
     <audio id="myAudio" src="static/mp3/bgm.mp3" autoplay loop></audio>
     <div id="gameplay-3x3board" class="gameplay__3x3board">
