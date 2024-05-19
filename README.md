@@ -14,10 +14,9 @@
 * Giao thức mạng: Websocket.
 
 # Webgame Tic Tac Toe.
-* Bao gồm nhiều chế độ chơi: Đấu thường hoặc đấu rank với người, và đấu với máy.
-* Trong chế độ competitive thì là deathmatch.
-* Các player có rank, vị trí trên BXH.
-* Việc tìm kiếm đối thủ là ngẫu nhiên, xếp cùng với những người cùng range điểm.
+- Bao gồm nhiều chế độ chơi: Đấu thường tạo phòng, đấu thường ngẫu nhiên hoặc đấu rank với người (Friend), và đấu với máy (Computer).
+- Trong chế độ rank, bảng chơi sẽ là 6x6, chơi đến khi có 5 ký tự giống nhau liên tiếp.
+- Việc tìm kiếm đối thủ là ngẫu nhiên trong chế độ Normal, chế độ Rank sẽ tìm người cùng thứ hạng trên BXH (điểm chênh không quá 1000).
 
 # Cách chạy phần mềm.
 1. Tải Git Bash.
